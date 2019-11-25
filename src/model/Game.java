@@ -1,17 +1,12 @@
 package model;
 
-import dataStructure.AdjacentListGraph;
-import dataStructure.AdjacentMatrixGraph;
-
 public class Game {
 
-
-
+	
+	private Maze maze;
 	
 	public Game() {
-
-
-
+		
     }
 
 
@@ -33,7 +28,15 @@ public class Game {
 
 
 
-	public void genareteMaze(){}
+	public void genareteMaze(){
+		
+	}
+	
+	
+	
+	
+	
+	
 
 	public void printMaze(){}
 
