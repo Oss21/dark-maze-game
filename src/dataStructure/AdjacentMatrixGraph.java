@@ -368,7 +368,7 @@ public class AdjacentMatrixGraph<K extends Comparable, V> implements IGraph<K, V
 		for (int i = 0; i < adjacentMatrix.size(); i++) {
 			for (int j = 0; j < adjacentMatrix.get(i).size(); j++) {
 				if(adjacentMatrix.get(i).get(j) == 1) {
-					edges.add(new Edge(weightMatrix.get(i).get(j), vertexs.get(i), vertexs.get(j)));
+					edges.add(new Edge(vertexs.get(i), vertexs.get(j), weightMatrix.get(i).get(j)));
 				}
 			}
 		}

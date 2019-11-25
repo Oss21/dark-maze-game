@@ -84,7 +84,7 @@ public class Vertex<K extends Comparable,V> {
 	}
 	
 	public void addEdge(Vertex<K,V> destination, double weight) {
-		Edge edge = new Edge(weight, this, destination);
+		Edge edge = new Edge(this, destination, weight);
 		
 		adjacentVertexs.add(edge);
 	}
