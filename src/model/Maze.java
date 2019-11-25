@@ -7,6 +7,11 @@ import customInterface.IGraph;
 import dataStructure.AdjacentListGraph;
 import dataStructure.AdjacentMatrixGraph;
 import dataStructure.Vertex;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -14,6 +19,11 @@ import java.util.HashMap;
  */
 public class Maze {
 
+	
+	public String [][] matriz;
+	
+	public static String PATH_LABERINTO_1="data/laberinto_1.csv"; 
+	
 	/**
 	 * Representa el grafo
 	 */
@@ -124,7 +134,46 @@ public class Maze {
 		graph. addEdge(sou,des,cost);
 	}
 
-
-
+	
+			
+	public void fillMatriz() throws IOException {
+		File file = new File(PATH_LABERINTO_1);
+		FileReader fr = new FileReader(file);
+		BufferedReader lector = new BufferedReader(fr);
+		String line = lector.readLine();
+		String [] dimensiones  = line.split(";");
+		int row = Integer.parseInt(dimensiones[0]);
+		int column = Integer.parseInt(dimensiones[1]);
+		matriz = new String[row][column];
+		lector.readLine();
+		int i = 0;
+		while(line != null) {
+			String[] elements = line.split(";");
+			for (int j = 0; j < matriz[i].length; j++) {
+				matriz[i][j] = elements[j];
+			}
+			i++;
+			line = lector.readLine();
+		}
+	
+		lector.close();
+		fr.close();
+	
+	}
+	
+	public void printMatriz() {
+	
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[i].length; j++) {
+				System.out.print(matriz[i][j]+" ");
+			}
+			System.out.println();
+		}
+		
+	}
+	
+	
+	
+	
 }
 
