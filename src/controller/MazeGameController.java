@@ -1,4 +1,4 @@
-package userInterface;
+package controller;
 
 import javafx.fxml.Initializable;
 import java.net.URL;
