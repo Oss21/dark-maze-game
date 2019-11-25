@@ -1,116 +1,92 @@
 package dataStructure;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class Vertex<K extends Comparable,V> {
-	
-	public enum Color{WHITE,GRAY,BLACK};
-	
-	private V value;
-	private K key;
-	private double initialDistance;
-	private double finalDistance;
-	private Color vertexColor;
-	
-	private Vertex<K,V> predecessor;
-	
-	private List<Edge> adjacentVertexs;
-	
-	public Vertex(K key, V value) {
+/**
+ * This class represents a vertex of a graph.
+ * 
+ *
+ * @param <T> The graph type.
+ */
+public class Vertex<T extends Comparable<T>> implements Comparable<Vertex<T>> {
+
+	/**
+	 * The value of the vertex.
+	 */
+	private T value;
+	/**
+	 * A edges list that the vertex have. 
+	 */
+	private ArrayList<Edge<?>> edges;
+
+	/**
+	 * A constructor to create a vertex.
+	 * @param value The value of the vertex.
+	 */
+	public Vertex(T value) {
 		this.value = value;
-		this.key = key;
-		
-		this.initialDistance = 0.0;
-		this.finalDistance = 0.0;
-		this.vertexColor = Color.WHITE;
-		
-		this.adjacentVertexs = new ArrayList<Edge>();
-		
+		edges = new ArrayList<>();
+
 	}
-	
-	public V getValue() {
-		return this.value;
+
+	/**
+	 * This method gets the edges of the vertex.
+	 * @return Returns a list of edges of this vertex.
+	 */
+	public ArrayList<Edge<?>> getEdges() {
+		return edges;
 	}
-	
-	public K getKey() {
-		return this.key;
+
+	/**
+	 * Modify the edges that this vertex have.
+	 * @param edges The new list to replace the current.
+	 */
+	public void setEdges(ArrayList<Edge<?>> edges) {
+		this.edges = edges;
 	}
-	
-	public double getInitialDistance() {
-		return this.initialDistance;
+
+	/**
+	 * The value of this vertex.
+	 * @return Returns the value of this vertex.
+	 */
+	public T getValue() {
+		return value;
 	}
-	
-	public double getFinalDistance() {
-		return this.finalDistance;
+
+	/**
+	 * Modify the value of this vertex.
+	 * @param value The new value.
+	 */
+	public void setValue(T value) {
+		this.value = value;
 	}
-	
-	public Color getColor() {
-		return vertexColor;
+
+	@Override
+	public String toString() {
+
+		return value.toString();
+
 	}
-	
-	public Vertex<K, V> getPredecessor(){
-		return this.predecessor;
+
+	/**
+	 * Method to verify if two vertices are equals.
+	 * @param v The vertex to compare.
+	 * @return A boolean variable where true means that the two vertices are equals.
+	 */
+	public boolean equals(Vertex<T> v) {
+
+		return this.value == v.value;
 	}
-	
-	public void setInitialDistance(double initialDistance) {
-		this.initialDistance = initialDistance;
-	}
-	
-	public void setFinalDistance(double finalDistance) {
-		this.finalDistance = finalDistance;
-	}
-	
-	public void setColor(Color verteColor) {
-		this.vertexColor = verteColor;
-	}
-	
-	public void setPredecessor(Vertex<K, V> predecessor) {
-		this.predecessor = predecessor;
-	}
-	
-	public List<Vertex<K, V>> getAdjacentVertexs(){
-		ArrayList<Vertex<K, V>> list = new ArrayList<Vertex<K,V>>();
-		
-		for (int i = 0; i < adjacentVertexs.size(); i++) {
-			list.add(adjacentVertexs.get(i).getDestination());
-		}
-		
-		return list;
-	}
-	
-	public List<Edge> getAdjacenVertexs(){
-		return this.adjacentVertexs;
-	}
-	
-	public void addEdge(Vertex<K,V> destination, double weight) {
-		Edge edge = new Edge(this, destination, weight);
-		
-		adjacentVertexs.add(edge);
-	}
-	
-	public Edge findEdge(Vertex<K,V> vertex){
-		Edge edge = null;
-		boolean stop = false;
-		
-		for (int i = 0; i < adjacentVertexs.size() && !stop; i++) {
-			if (adjacentVertexs.get(i).getDestination().key.compareTo(vertex.key) == 0) {
-				edge = adjacentVertexs.get(i);
-				stop = true;
-			}
-		}
-		return edge;
-	}
-	
-	public void removeEdge(Vertex<K,V> vertex) {
-		boolean stop = false;
-		
-		for (int i = 0; i < adjacentVertexs.size() && !stop; i++) {
-			if (findEdge(vertex).getDestination().key.compareTo(vertex.key) == 0) {
-				adjacentVertexs.remove(i);
-				stop = true;
-			}
-		}
+
+	@Override
+	public int compareTo(Vertex<T> o) {
+
+		if (this.equals(o))
+			return 0;
+
+		else
+			return -1;
+
 	}
 
 }

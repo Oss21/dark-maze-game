@@ -2,49 +2,27 @@ package model;
 
 public class Game {
 
-	
+	/**
+	 * Representa el laberinto a crear
+	 */
 	private Maze maze;
 	
+	
+	/**
+	 * Crea un nuevo juego
+	 */
 	public Game() {
 		
     }
-
-
-
-
-
-	public void illuminateThreePath(){}
-
-
-	public void continueExpedition(){}
-
-	public void finishExpedition(){}
-
-
-
-	public void loadGameState(){}
-
-	public void saveGameState(){}
-
-
-
-	public void genareteMaze(){
-		
+	
+	
+	/**
+	 * Inicializa todo el proceso para comenzar la creacion de un nuevo laberinto
+	 * @param isMatrix
+	 */
+	public void genareteMaze(boolean isMatrix){
+		this.maze = new Maze(isMatrix);
 	}
-	
-	
-	
-	
-	
-	
-
-	public void printMaze(){}
-
-	public void illiminateAdjacents(){}
-
-	public boolean checkCompleteMaze(){return false;}
-
-	public void illuminateLightPoint(){}
 
 
 
