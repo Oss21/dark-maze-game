@@ -1,11 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.MazeGameGUI" prefHeight="400.0" prefWidth="600.0">
 
-</AnchorPane>
+<BorderPane prefHeight="665.0" prefWidth="1118.0" style="-fx-background-color: #0a0a0a;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MazeGameGUI">
+   <center>
+      <SplitPane dividerPositions="0.25448028673835127" prefHeight="160.0" prefWidth="200.0" style="-fx-background-color: #0a0a0a;" BorderPane.alignment="CENTER">
+        <items>
+            <BorderPane style="-fx-background-color: #0a0a0a;">
+               <top>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="btMatriz" mnemonicParsing="false" style="-fx-background-color: #0c8c79;" text="Matriz">
+                           <font>
+                              <Font name="Segoe UI Black" size="15.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btLista" mnemonicParsing="false" style="-fx-background-color: #0c8c79;" text="Lista">
+                           <font>
+                              <Font name="Segoe UI Black" size="15.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </VBox>
+               </top>
+               <center>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="btDarSolucion" mnemonicParsing="false" style="-fx-background-color: #0c8c79;" text="Dar Solución">
+                           <font>
+                              <Font name="Segoe UI Black" size="15.0" />
+                           </font>
+                        </Button>
+                        <VBox alignment="CENTER" prefHeight="128.0" prefWidth="330.0" spacing="10.0">
+                           <children>
+                              <Button fx:id="btIrAPuntoDeLuz" mnemonicParsing="false" style="-fx-background-color: #0c8c79;" text="Ir A Punto de Luz">
+                                 <font>
+                                    <Font name="Segoe UI Black" size="15.0" />
+                                 </font>
+                              </Button>
+                              <Label prefHeight="45.0" prefWidth="212.0" text="Para usar esta hablidad debe selecccionar el punto de llegada" textAlignment="CENTER" textFill="#0c8c79" wrapText="true">
+                                 <font>
+                                    <Font name="Segoe UI Black Italic" size="13.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <Button fx:id="btUsarLinterna" mnemonicParsing="false" style="-fx-background-color: #0c8c79;" text="Usar Linterna">
+                           <font>
+                              <Font name="Segoe UI Black" size="15.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </VBox>
+               </center>
+               <bottom>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="btGuardarPartida" mnemonicParsing="false" style="-fx-background-color: #0c8c79;" text="Guardar Partida">
+                           <font>
+                              <Font name="Segoe UI Black" size="15.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btAtras" mnemonicParsing="false" style="-fx-background-color: #0c8c79;" text="Atrás">
+                           <font>
+                              <Font name="Segoe UI Black" size="15.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </VBox>
+               </bottom>
+            </BorderPane>
+            <Pane fx:id="pnMaze" prefHeight="553.0" prefWidth="679.0" style="-fx-background-color: #dbd9d9;" />
+        </items>
+      </SplitPane>
+   </center>
+</BorderPane>

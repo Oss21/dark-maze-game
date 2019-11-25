@@ -6,9 +6,12 @@ import java.util.ResourceBundle;
 
 public class MazeGameController implements Initializable {
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 }
+
+
+
+

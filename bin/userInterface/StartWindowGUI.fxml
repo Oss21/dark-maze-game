@@ -1,8 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="429.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StartWindowsController">
-
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="491.0" prefWidth="681.0" style="-fx-background-color: #0a0a0a;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox prefHeight="221.0" prefWidth="679.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="240.0" fitWidth="681.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resourses/img/banner%20dark%20maze.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+   </top>
+   <bottom>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btNuevaPartida" mnemonicParsing="false" style="-fx-background-color: #0c8c79;" text="Nueva Partida">
+               <font>
+                  <Font name="Segoe UI Black" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="btCargarPartida" mnemonicParsing="false" style="-fx-background-color: #0c8c79;" text="Cargar Partida">
+               <font>
+                  <Font name="Segoe UI Black" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="btSalir" mnemonicParsing="false" style="-fx-background-color: #0c8c79;" text="Salir">
+               <font>
+                  <Font name="Segoe UI Black" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </bottom>
+   <center>
+      <HBox alignment="TOP_CENTER" style="-fx-background-color: #0a0a0a;" BorderPane.alignment="CENTER">
+         <children>
+            <Label contentDisplay="TOP" text="Dark Maze Game" textFill="#0c8c79">
+               <font>
+                  <Font name="Segoe UI Black" size="42.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>
