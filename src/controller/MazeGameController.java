@@ -2,17 +2,29 @@ package controller;
 
 import java.io.IOException;
 
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
+import java.util.Optional;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import model.Game;
 
 
@@ -50,6 +62,8 @@ public class MazeGameController {
     @FXML
     private Pane pnMaze;
     
+    @FXML
+    private ScrollPane spMaze;
     
     
     
@@ -69,9 +83,33 @@ public class MazeGameController {
     }
     
     @FXML
-    void backClicked(ActionEvent event) {
-    	
-    }
+	void backClicked(ActionEvent event) {
+
+			Alert alert = new Alert(AlertType.CONFIRMATION, "Si no ha guardado su progreso en el juego, se borrará.",
+					ButtonType.OK, ButtonType.CANCEL);
+			alert.setHeaderText("¿Seguro desea salir sin guardar el juego");
+	
+			Optional<ButtonType> result = alert.showAndWait();
+
+			if (result.get().equals(ButtonType.OK)) {
+				
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/userInterface/StartWindowGUI.fxml"));
+				Parent root = null;
+				
+				try {
+					root = loader.load();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			
+				Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+				stage.setScene(new Scene(root));
+				stage.show();
+			}
+
+		
+
+	}
 
     @FXML
     void giveSolutionClicked(ActionEvent event) {
@@ -169,7 +207,7 @@ public class MazeGameController {
 			
 		}
     	System.out.println("hola");
-    	pnMaze.getChildren().add(grid);
+    	spMaze.setContent(grid);
     }
     
 }

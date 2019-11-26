@@ -64,6 +64,7 @@ public class Game {
 		
 		for (int i = 0; i < edges.size(); i++) {
 			//area.add(maze.getGraph().getIndexVertex((Path) edges.get(i).getDestination().getValue()));
+		    //area.add(maze.getGraph().getIndexVertex((Path) edges.get(i).getDestination().getValue()));
 		}
 		return area;
 	}
