@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="491.0" prefWidth="681.0" style="-fx-background-color: #0a0a0a;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="491.0" prefWidth="681.0" style="-fx-background-color: #0a0a0a;" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StartWindowsController">
    <top>
       <HBox prefHeight="221.0" prefWidth="679.0" BorderPane.alignment="CENTER">
          <children>
@@ -25,17 +24,17 @@
    <bottom>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btNuevaPartida" mnemonicParsing="false" style="-fx-background-color: #0c8c79;" text="Nueva Partida">
+            <Button fx:id="btNuevaPartida" mnemonicParsing="false" onAction="#newGameClicked" style="-fx-background-color: #0c8c79;" text="Nueva Partida">
                <font>
                   <Font name="Segoe UI Black" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="btCargarPartida" mnemonicParsing="false" style="-fx-background-color: #0c8c79;" text="Cargar Partida">
+            <Button fx:id="btCargarPartida" mnemonicParsing="false" onAction="#loadGameClicked" style="-fx-background-color: #0c8c79;" text="Cargar Partida">
                <font>
                   <Font name="Segoe UI Black" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="btSalir" mnemonicParsing="false" style="-fx-background-color: #0c8c79;" text="Salir">
+            <Button fx:id="btSalir" mnemonicParsing="false" onAction="#leaveClicked" style="-fx-background-color: #0c8c79;" text="Salir">
                <font>
                   <Font name="Segoe UI Black" size="15.0" />
                </font>
