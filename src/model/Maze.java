@@ -16,7 +16,7 @@ import java.util.HashMap;
  */
 public class Maze implements Serializable{
 
-	public static String PATH_LABERINTO_1="data/laberinto_1.csv"; 
+	public static final String PATH_LABERINTO_1="resourses/data/laberinto_1.csv"; 
 	
 	/**
 	 * Representa el laberinto
@@ -57,14 +57,14 @@ public class Maze implements Serializable{
 	 * @param isMatrix - indica el tipo de implementacion del grafo.
 	 */
 	public Maze(boolean isMatrix) {
-		if (isMatrix) {
-			this.graphByMatrix = new GraphByMatrix<String, Integer>(matriz.length);
-		} else {
-			this.graphByLists = new GraphByLists<String, Integer>(matriz.length);
-		}
-		
-		hashMapPaths = new HashMap<>();
-		this.isMatrix = isMatrix;
+//		if (isMatrix) {
+//			this.graphByMatrix = new GraphByMatrix<String, Integer>(matriz.length);
+//		} else {
+//			this.graphByLists = new GraphByLists<String, Integer>(matriz.length);
+//		}
+//		
+//		hashMapPaths = new HashMap<>();
+//		this.isMatrix = isMatrix;
 	}
 
 	
@@ -102,7 +102,7 @@ public class Maze implements Serializable{
 		int column = Integer.parseInt(dimensiones[1]);
 		matriz = new String[row][column];
 		
-		lector.readLine();
+		line = lector.readLine();
 		int i = 0;
 		while(line != null) {
 			String[] elements = line.split(";");

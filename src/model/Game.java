@@ -1,5 +1,6 @@
 package model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,9 +39,11 @@ public class Game {
 	/**
 	 * Inicializa todo el proceso para comenzar la creacion de un nuevo laberinto
 	 * @param isMatrix
+	 * @throws IOException 
 	 */
-	public void genareteMaze(boolean isMatrix){
+	public void genareteMaze(boolean isMatrix) throws IOException{
 		this.maze = new Maze(isMatrix);
+		this.maze.fillMatriz();
 	}
 
 	/**
