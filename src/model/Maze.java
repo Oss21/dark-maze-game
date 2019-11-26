@@ -26,7 +26,7 @@ public class Maze implements Serializable{
 	/**
 	 * Representa el grafo cuando se utiliza lista de adyacencia
 	 */
-	private GraphByLists<String, Integer> graphByLists;
+	private GraphByLists<String, Double> graphByLists;
 	
 	/**
 	 * Representa al grafo cuando se utiliza con matrix de adyacencia
@@ -48,7 +48,10 @@ public class Maze implements Serializable{
 	 */
 	private int numberOfSteps;
 	
-	
+	/**
+	 * Represents the cost of the road
+	 */
+	public static double COST = 1.0;
 	
 	
 
@@ -139,17 +142,25 @@ public class Maze implements Serializable{
 	 *<pre>The matrix was already initialized and filled with their respective vertices </pre> 
 	 */
 	public void createListAdyacent() {
-		this.graphByLists = new GraphByLists<String, Integer>(numberOfSteps);
+		this.graphByLists = new GraphByLists<String, Double>(numberOfSteps);
 		for (int i = 0; i < matriz.length; i++) {
 			for (int j = 0; j < matriz[i].length; j++) {
-				
+				String[] value = finAdjacent(i,j).split(",");
+				int k = 0;	
+				while (k > value.length) {
+					if(value[k] != "NO") {
+						graphByLists.addEdge(matriz[i][j], value[k], GraphByLists.NOT_DIRECTED, COST,COST);
+					}
+					k++;
+				}
 			}
 		}
 		
-		
-		
-		
 	}
+		
+		
+		
+	
 	
 	
 	

@@ -9,6 +9,14 @@ import customInterface.IGraph;
 public class GraphByLists<T extends Comparable<T>, E extends Comparable<E>> implements IGraph<T, E> {
 
 	/**
+	 * Determine that the graph is direct.
+	 */
+	public static final boolean DIRECTED = true;
+	/**
+	 * Determine that the graph is not direct
+	 */
+	public static final boolean NOT_DIRECTED = true;
+	/**
 	 * The adjacency list of the graph.
 	 */
 	private ArrayList<ArrayList<Vertex<T>>> adjList;
