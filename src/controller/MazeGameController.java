@@ -7,9 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 import java.util.Optional;
-
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -18,7 +15,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,11 +26,12 @@ import model.Game;
 
 public class MazeGameController {
 	
-	private static final String PATH_IMAGE_URL = "/img/path.png";
-	private static final String WALL_IMAGE_URL = "/img/wall.png";
+	private static final String PATH_IMAGE_URL = "/img/cesped.jpg";
+	private static final String WALL_IMAGE_URL = "/img/dique.jpg";
 	private static final String HOLE_IMAGE_URL = "/img/hole.png";
-	private static final String LAKE_IMAGE_URL = "/img/lake.png";
-	private static final String QUICKSAND_IMAGE_URL = "/img/quicksand.png";
+	private static final String LAKE_IMAGE_URL = "/img/agua.jpg";
+	private static final String QUICKSAND_IMAGE_URL = "/img/arena.png";
+	private static final String WALL_MAZE_IMAGE_URL = "/img/pared.jpg";
 	
 	private Game game;
 	
@@ -106,9 +103,6 @@ public class MazeGameController {
 				stage.setScene(new Scene(root));
 				stage.show();
 			}
-
-		
-
 	}
 
     @FXML
@@ -160,26 +154,24 @@ public class MazeGameController {
     
     
     private void createMaze() {
-    	
     	String[][] matrix =  this.game.getMaze().getMatriz();
     	
     	GridPane grid = new GridPane();
-    	grid.setGridLinesVisible(true);
     	
     	Image p = new Image(PATH_IMAGE_URL);
     	Image w = new Image(WALL_IMAGE_URL);
     	Image h = new Image(HOLE_IMAGE_URL);
     	Image l = new Image(LAKE_IMAGE_URL);
     	Image q = new Image(QUICKSAND_IMAGE_URL);
+    	Image w2 = new Image(WALL_MAZE_IMAGE_URL);
     	 
     	
     	for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[i].length; j++) {
 				
 				ImageView iView = new ImageView();
-				iView.setFitWidth(30);
+				iView.setFitWidth(50);
 				iView.setPreserveRatio(true);
-
 				
 				switch (matrix[i][j]) {
 				case "-":
@@ -200,13 +192,13 @@ public class MazeGameController {
 				case "q":
 					iView.setImage(q);
 					break;
+				case "#":
+					iView.setImage(w2);
+					break;
 				}
 				grid.add(iView, j, i);
 			}
-			
-			
 		}
-    	System.out.println("hola");
     	spMaze.setContent(grid);
     }
     
