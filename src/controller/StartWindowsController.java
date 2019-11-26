@@ -78,6 +78,7 @@ public class StartWindowsController {
 		MazeGameController ven = loader.getController();
 		ven.setGame(game);
 		ven.disableButtons();
+		game.loadGame();
 		
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.setScene(new Scene(root));

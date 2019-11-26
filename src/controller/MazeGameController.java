@@ -82,12 +82,32 @@ public class MazeGameController {
     @FXML
 	void backClicked(ActionEvent event) {
 
-			Alert alert = new Alert(AlertType.CONFIRMATION, "Si no ha guardado su progreso en el juego, se borrará.",
+    	
+    	if(btGuardarPartida.isDisable()) {
+    		
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/userInterface/StartWindowGUI.fxml"));
+			Parent root = null;
+			
+			try {
+				root = loader.load();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			stage.setScene(new Scene(root));
+			stage.show();
+    		
+    	}else {
+    		
+    		Alert alert = new Alert(AlertType.CONFIRMATION, "Si no ha guardado su progreso en el juego, se borrará.",
 					ButtonType.OK, ButtonType.CANCEL);
 			alert.setHeaderText("¿Seguro desea salir sin guardar el juego");
 	
 			Optional<ButtonType> result = alert.showAndWait();
 
+		
+				
 			if (result.get().equals(ButtonType.OK)) {
 				
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/userInterface/StartWindowGUI.fxml"));
@@ -103,6 +123,11 @@ public class MazeGameController {
 				stage.setScene(new Scene(root));
 				stage.show();
 			}
+
+
+    	}
+    	
+
 	}
 
     @FXML
@@ -143,15 +168,15 @@ public class MazeGameController {
 
     @FXML
     void saveGameClicked(ActionEvent event) {
-
+    	game.saveGame();
+    	btGuardarPartida.setDisable(true);
     }
 
     @FXML
     void useFlashlightClicked(ActionEvent event) {
 
     }
-    
-    
+  
     
     private void createMaze() {
     	String[][] matrix =  this.game.getMaze().getMatriz();
@@ -198,6 +223,7 @@ public class MazeGameController {
 				}
 				grid.add(iView, j, i);
 			}
+			
 		}
     	spMaze.setContent(grid);
     }

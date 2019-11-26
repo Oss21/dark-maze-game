@@ -1,8 +1,16 @@
 package model;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.ietf.jgss.Oid;
 
 import dataStructure.Edge;
 import dataStructure.Vertex;
@@ -49,9 +57,42 @@ public class Game {
 	/**
 	 * 
 	 */
-	public void loadGame() {
-		
+	public void loadGame(){
+		try {
+			File file = new File("resourses/serialization/serialization.dat");
+			if (file.exists()) {
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+				maze = (Maze) ois.readObject();
+				ois.close();
+			} else {
+				file.createNewFile();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}catch (ClassNotFoundException e) {
+				e.printStackTrace();
+		}
+
 	}
+	
+	
+	
+	public void saveGame() {
+		File file = new File("resourses/serialization/serialization.dat");
+		if (file.exists()) {
+			file.delete();
+		}
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+			oos.writeObject(maze);
+			oos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	
 	/**
 	 * 
