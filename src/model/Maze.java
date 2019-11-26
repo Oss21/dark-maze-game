@@ -117,5 +117,86 @@ public class Maze implements Serializable{
 	
 	
 	
+	
+	public String finAdjacent(int x, int y) {
+		String result = null;
+		// Checks if there is a vertex above the origin vertex
+		if(matriz[x][y-1] != null) {
+			result = checkUp(x, y)+",";
+		}
+		
+		// Checks if there is a vertex to the right of the origin vertex
+		if(matriz[x+1][y] != null ) {
+			result = checkRight(x, y)+",";
+		}
+		
+		//Checks if there is a vertex to the left of the origin vertex
+		if(matriz[x-1][y] != null) {
+			result = checkLeft(x, y)+",";
+		}
+		
+		// Checks if there is a vertex below the origin vertex
+		if(matriz[x][y+1] != null) {
+			result = checkDown(x, y)+",";
+		}
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Method helper find adjacent
+	 *	This method checks if there is a vertex above the origin vertex
+	 * @param x The x position of an origin vertex
+	 * @param y The y position of an origin vertex
+	 * @return The value that is in that position or No if it does not exist. 
+	 */
+	private String checkUp(int x, int y) {
+		return (matriz[x][--y] != "#")? matriz[x][y]:"NO" ;
+	}
+	
+	/**
+	 * Method helper find adjacent
+	 *	This method checks if there is a vertex to the right of the origin vertex
+	 * @param x The x position of an origin vertex
+	 * @param y The y position of an origin vertex
+	 * @return The value that is in that position or No if it does not exist. 
+	 */
+	private String checkRight(int x, int y) {
+		return (matriz[++x][y] != "#")? matriz[x][y] : "NO";
+	}
+	
+
+	/**
+	 * Method helper find adjacent
+	 *	This method checks if there is a vertex to the left of the origin vertex
+	 * @param x The x position of an origin vertex
+	 * @param y The y position of an origin vertex
+	 * @return The value that is in that position or No if it does not exist. 
+	 */
+	private String checkLeft(int x, int y) {
+		return (matriz[--x][y] != "#")? matriz[x][y] : "NO";
+	}
+	
+	
+	/**
+	 * Method helper find adjacent
+	 *	This method checks if there is a vertex below the origin vertex
+	 * @param x The x position of an origin vertex
+	 * @param y The y position of an origin vertex
+	 * @return The value that is in that position or No if it does not exist. 
+	 */
+	private String checkDown(int x, int y) {
+		return (matriz[x][++y] != "#")? matriz[x][y] : "NO";
+	}
+	
+	
+	
+	
+	
+	
 }
 
