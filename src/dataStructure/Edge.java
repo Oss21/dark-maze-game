@@ -37,7 +37,7 @@ public class Edge<E extends Comparable<E>> implements Comparable<Edge<E>> {
 	 * A constructor of an edge.
 	 * @param directed Identify if the edge is directed or not. (True = directed) (False = Undirected)
 	 * @param cost The edge cost.
-	 * @param value The edge value.
+	 * @param
 	 */
 	public Edge(boolean directed, double cost, E value) {
 

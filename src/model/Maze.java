@@ -26,12 +26,12 @@ public class Maze implements Serializable{
 	/**
 	 * Representa el grafo cuando se utiliza lista de adyacencia
 	 */
-	private GraphByLists<Path, Integer> graphByLists;
+	private GraphByLists<String, Integer> graphByLists;
 	
 	/**
 	 * Representa al grafo cuando se utiliza con matrix de adyacencia
 	 */
-	private GraphByMatrix<Path, Integer> graphByMatrix;
+	private GraphByMatrix<String, Integer> graphByMatrix;
 
 	/**
 	 * Representa la lista de senderos en el grafo.
@@ -43,6 +43,14 @@ public class Maze implements Serializable{
 	 */
 	private boolean isMatrix;
 
+	/**
+	 * Indicate how many steps are in the maze in the other words how many vertices are there.
+	 */
+	private int numberOfSteps;
+	
+	
+	
+	
 
 	/**
 	 * Crea un laberinto
@@ -50,9 +58,9 @@ public class Maze implements Serializable{
 	 */
 	public Maze(boolean isMatrix) {
 		if (isMatrix) {
-			this.graphByMatrix = new GraphByMatrix<Path, Integer>(matriz.length);
+			this.graphByMatrix = new GraphByMatrix<String, Integer>(matriz.length);
 		} else {
-			this.graphByLists = new GraphByLists<Path, Integer>(matriz.length);
+			this.graphByLists = new GraphByLists<String, Integer>(matriz.length);
 		}
 		
 		hashMapPaths = new HashMap<>();
@@ -60,19 +68,22 @@ public class Maze implements Serializable{
 	}
 
 	
-	/**
-	 * Devuelve el grafo.
-	 * @return graph - es el grafo.
-	 */
-	public IGraph<Path,Integer> getGraph(){
-		IGraph<Path, Integer> graph;
-		
-		return graph = isMatrix ? this.graphByMatrix : this.graphByLists;
-	}
+	
 	
 	/**
-	 * 
-	 * @throws IOException
+	 * Number of steps
+	 * @return The number of steps in the maze.
+	 */
+	public int getNumberOfSteps() {
+		return numberOfSteps;
+	}
+
+
+	
+	/**
+	 * This method fill the matrix according to the read
+	 * file that contains the dimensions of the matrix and its template.
+	 * @throws IOException If the file path is not found
 	 */
 	public void fillMatriz() throws IOException {
 		File file = new File(PATH_LABERINTO_1);
@@ -100,17 +111,37 @@ public class Maze implements Serializable{
 		fr.close();
 	}
 	
-	/**
-	 * 
-	 */
-	public void printMatriz() {
 	
+	/**
+	 * This method allows to fill the matrix with the respective vertices.
+	 */
+	public void fillMatrixWithNumber() {
 		for (int i = 0; i < matriz.length; i++) {
 			for (int j = 0; j < matriz[i].length; j++) {
-				System.out.print(matriz[i][j]+" ");
+				if(matriz[i][j] != "#") {
+					matriz[i][j] = "V"+ numberOfSteps++;
+				}
 			}
-			System.out.println();
 		}
+	}
+
+	
+		
+	
+	/**
+	 * This method allows to create a list adyacent.
+	 *<pre>The matrix was already initialized and filled with their respective vertices </pre> 
+	 */
+	public void createListAdyacent() {
+		this.graphByLists = new GraphByLists<String, Integer>(numberOfSteps);
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[i].length; j++) {
+				
+			}
+		}
+		
+		
+		
 		
 	}
 	
@@ -118,26 +149,43 @@ public class Maze implements Serializable{
 	
 	
 	
+	
+	
+	
+	/**
+	 * This method checks if there are vertices around an origin vertex. 
+	 * @param x The x position of an origin vertex
+	 * @param y The y position of an origin vertex.
+	 * @return 
+	 */
 	public String finAdjacent(int x, int y) {
 		String result = null;
 		// Checks if there is a vertex above the origin vertex
 		if(matriz[x][y-1] != null) {
 			result = checkUp(x, y)+",";
+		}else {
+			result = "NO"+",";
 		}
 		
 		// Checks if there is a vertex to the right of the origin vertex
 		if(matriz[x+1][y] != null ) {
 			result = checkRight(x, y)+",";
+		}else {
+			result = "NO"+",";
 		}
 		
 		//Checks if there is a vertex to the left of the origin vertex
 		if(matriz[x-1][y] != null) {
 			result = checkLeft(x, y)+",";
+		}else {
+			result = "NO"+",";
 		}
 		
 		// Checks if there is a vertex below the origin vertex
 		if(matriz[x][y+1] != null) {
 			result = checkDown(x, y)+",";
+		}else {
+			result = "NO"+",";
 		}
 		return result;
 	}
@@ -172,7 +220,7 @@ public class Maze implements Serializable{
 
 	/**
 	 * Method helper find adjacent
-	 *	This method checks if there is a vertex to the left of the origin vertex
+	 *This method checks if there is a vertex to the left of the origin vertex
 	 * @param x The x position of an origin vertex
 	 * @param y The y position of an origin vertex
 	 * @return The value that is in that position or No if it does not exist. 
@@ -198,5 +246,50 @@ public class Maze implements Serializable{
 	
 	
 	
-}
+}//FIN
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///**
+// * 
+// */
+//public void printMatriz() {
+//
+//	for (int i = 0; i < matriz.length; i++) {
+//		for (int j = 0; j < matriz[i].length; j++) {
+//			System.out.print(matriz[i][j]+" ");
+//		}
+//		System.out.println();
+//	}
+//	
+//}
+//
+
+
+
+
+///**
+// * Devuelve el grafo.
+// * @return graph - es el grafo.
+// */
+//public IGraph<String,Integer> getGraph(){
+//	IGraph<Path, Integer> graph;
+//	
+//	return graph = isMatrix ? this.graphByMatrix : this.graphByLists;
+//}
