@@ -39,7 +39,6 @@ public class Game {
     }
 	
 	
-	
 	public Maze getMaze() {
 		return maze;
 	}
@@ -55,7 +54,7 @@ public class Game {
 	}
 
 	/**
-	 * 
+	 * Load the game state.
 	 */
 	public void loadGame(){
 		try {
@@ -76,7 +75,9 @@ public class Game {
 	}
 	
 	
-	
+	/**
+	 * Save the game state.
+	 */
 	public void saveGame() {
 		File file = new File("resourses/serialization/serialization.dat");
 		if (file.exists()) {

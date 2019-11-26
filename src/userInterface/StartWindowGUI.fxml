@@ -24,17 +24,17 @@
    <bottom>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btNuevaPartida" mnemonicParsing="false" onAction="#newGameClicked" style="-fx-background-color: #0c8c79;" text="Nueva Partida">
+            <Button fx:id="btNewGame" mnemonicParsing="false" onAction="#newGameClicked" style="-fx-background-color: #0c8c79;" text="Nueva Partida">
                <font>
                   <Font name="Segoe UI Black" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="btCargarPartida" mnemonicParsing="false" onAction="#loadGameClicked" style="-fx-background-color: #0c8c79;" text="Cargar Partida">
+            <Button fx:id="btLoadGame" mnemonicParsing="false" onAction="#loadGameClicked" style="-fx-background-color: #0c8c79;" text="Cargar Partida">
                <font>
                   <Font name="Segoe UI Black" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="btSalir" mnemonicParsing="false" onAction="#leaveClicked" style="-fx-background-color: #0c8c79;" text="Salir">
+            <Button fx:id="btExit" mnemonicParsing="false" onAction="#leaveClicked" style="-fx-background-color: #0c8c79;" text="Salir">
                <font>
                   <Font name="Segoe UI Black" size="15.0" />
                </font>

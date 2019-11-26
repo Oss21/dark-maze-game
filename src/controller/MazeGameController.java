@@ -39,26 +39,23 @@ public class MazeGameController {
     private Button btMatriz;
 
     @FXML
-    private Button btLista;
+    private Button btList;
 
     @FXML
-    private Button btDarSolucion;
+    private Button btGiveSolution;
 
     @FXML
-    private Button btIrAPuntoDeLuz;
+    private Button btGoToPointLight;
 
     @FXML
-    private Button btUsarLinterna;
+    private Button btUseFlashlight;
 
     @FXML
-    private Button btGuardarPartida;
+    private Button btSaveGame;
 
     @FXML
-    private Button btAtras;
+    private Button btBack;
 
-    @FXML
-    private Pane pnMaze;
-    
     @FXML
     private ScrollPane spMaze;
     
@@ -75,7 +72,7 @@ public class MazeGameController {
 	}
     
     public void disableButtons() {
-    	this.btLista.setDisable(true);
+    	this.btList.setDisable(true);
     	this.btMatriz.setDisable(true);
     }
     
@@ -83,7 +80,7 @@ public class MazeGameController {
 	void backClicked(ActionEvent event) {
 
     	
-    	if(btGuardarPartida.isDisable()) {
+    	if(btSaveGame.isDisable()) {
     		
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("/userInterface/StartWindowGUI.fxml"));
 			Parent root = null;
@@ -169,7 +166,7 @@ public class MazeGameController {
     @FXML
     void saveGameClicked(ActionEvent event) {
     	game.saveGame();
-    	btGuardarPartida.setDisable(true);
+    	btSaveGame.setDisable(true);
     }
 
     @FXML
@@ -178,7 +175,7 @@ public class MazeGameController {
     }
   
     
-    private void createMaze() {
+    public void createMaze() {
     	String[][] matrix =  this.game.getMaze().getMatriz();
     	
     	GridPane grid = new GridPane();

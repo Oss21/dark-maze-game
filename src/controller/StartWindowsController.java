@@ -17,95 +17,92 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 public class StartWindowsController {
-	
-	
+
 	/**
 	 * 
 	 */
 	@FXML
-    private Button btNuevaPartida;
-	
+	private Button btNewGame;
+
 	/**
 	 * 
 	 */
-    @FXML
-    private Button btCargarPartida;
-    
-    /**
-     * 
-     */
-    @FXML
-    private Button btSalir;
-	
-	
-    
+	@FXML
+	private Button btLoadGame;
+
 	/**
 	 * 
 	 */
-    public void initialize() {
-    	
-    }
-    
-    
-    
-    /**
-     * 
-     * @param event
-     */
-    @FXML
-    void leaveClicked(ActionEvent event) {
-    	System.exit(0);
-    }
-    
-    /**
-     * 
-     * @param event
-     */
-    @FXML
-    void loadGameClicked(ActionEvent event) {
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/userInterface/MazeGameGUI.fxml"));
+	@FXML
+	private Button btExit;
+
+	/**
+	 * 
+	 */
+	public void initialize() {
+
+	}
+
+	/**
+	 * 
+	 * @param event
+	 */
+	@FXML
+	void leaveClicked(ActionEvent event) {
+		System.exit(0);
+	}
+
+	/**
+	 * 
+	 * @param event
+	 */
+	@FXML
+	void loadGameClicked(ActionEvent event) {
+
+		Game game = new Game();
+
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/userInterface/MazeGameGUI.fxml"));
 		Parent root = null;
-		
+
 		try {
 			root = loader.load();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		Game game = new Game();
+
 		game.loadGame();
-		
+
 		MazeGameController ven = loader.getController();
 		ven.setGame(game);
 		ven.disableButtons();
-		game.loadGame();
+		ven.createMaze();
 		
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.setScene(new Scene(root));
 		stage.show();
-    }
-    
-    /**
-     * 
-     * @param event
-     */
-    @FXML
-    void newGameClicked(ActionEvent event) {
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/userInterface/MazeGameGUI.fxml"));
+	}
+
+	/**
+	 * 
+	 * @param event
+	 */
+	@FXML
+	void newGameClicked(ActionEvent event) {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/userInterface/MazeGameGUI.fxml"));
 		Parent root = null;
-		
+
 		try {
 			root = loader.load();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		Game game = new Game();
 		MazeGameController ven = loader.getController();
 		ven.setGame(game);
-		
+
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.setScene(new Scene(root));
 		stage.show();
-    }
+	}
 }
