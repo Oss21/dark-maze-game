@@ -69,6 +69,12 @@ public class Maze implements Serializable{
 
 	
 	
+	/**
+	 * 
+	 */
+	public String[][] getMatriz() {
+		return matriz;
+	}
 	
 	/**
 	 * Number of steps
