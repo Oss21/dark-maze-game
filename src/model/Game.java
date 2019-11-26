@@ -64,6 +64,10 @@ public class Game {
 	 * 
 	 */
 	public List<Integer> iluminateLargerArea() {
+		List<Integer> area = new ArrayList<Integer>();
+		
+		
+		
 		return null;
 	}
 }
