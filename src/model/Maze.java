@@ -8,12 +8,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  *
  */
-public class Maze {
+public class Maze implements Serializable{
 
 	public static String PATH_LABERINTO_1="data/laberinto_1.csv"; 
 	

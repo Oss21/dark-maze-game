@@ -126,10 +126,10 @@ public class GraphByMatrix<T extends Comparable<T>, E extends Comparable<E>> imp
 	 * @param valueVertex The vertex to know its edges.
 	 * @return The edges of the specified vertex.
 	 */
-	public ArrayList<Edge<E>> getEdgesOfVertex(T valueVertex) {
+	public ArrayList<Edge<?>> getEdgesOfVertex(T valueVertex) {
 
 		int E = getIndexVertex(valueVertex);
-		ArrayList<Edge<E>> edges = new ArrayList<>();
+		ArrayList<Edge<?>> edges = new ArrayList<>();
 
 		for (int i = 0; i < adjMatrix[0].length; i++) {
 			if (!adjMatrix[E][i].isEmpty()) {

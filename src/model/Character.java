@@ -1,8 +1,10 @@
 package model;
 
+import java.io.Serializable;
+
 import dataStructure.Vertex;
 
-public class Character {
+public class Character implements Serializable{
 	
 	public static final double LIGHTING_INTERVAL = 15.0;
 	

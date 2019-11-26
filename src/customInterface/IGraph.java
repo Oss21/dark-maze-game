@@ -1,5 +1,9 @@
 package customInterface;
 
+import java.util.ArrayList;
+
+import dataStructure.Edge;
+
 public interface IGraph<T extends Comparable<T>, E extends Comparable<E>> {
 	
 	
@@ -47,4 +51,14 @@ public interface IGraph<T extends Comparable<T>, E extends Comparable<E>> {
 	 * @return number vertices of the graph
 	 */
 	int getNumVertex();
+
+	/**
+	 * 
+	 */
+	ArrayList<Edge<?>> getEdgesOfVertex(T vertex);
+	
+	/**
+	 * 
+	 */
+	int getIndexVertex(T valueVertex);
 }

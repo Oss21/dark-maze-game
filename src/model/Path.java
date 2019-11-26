@@ -1,6 +1,8 @@
 package model;
 
-public class Path implements Comparable<Path> {
+import java.io.Serializable;
+
+public class Path implements Comparable<Path>, Serializable{
 
 
 	public enum PathType {PATH,WALL,HOLE,LAKE,QUICKSAND}

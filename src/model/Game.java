@@ -1,7 +1,21 @@
 package model;
 
-public class Game {
+import java.util.ArrayList;
+import java.util.List;
 
+import dataStructure.Edge;
+import dataStructure.Vertex;
+import javafx.scene.media.VideoTrack;
+
+public class Game {
+	
+	public static final int LIGHTING_LIMIT = 3;
+	
+	/**
+	 * 
+	 */
+	private Character character;
+	
 	/**
 	 * Representa el laberinto a crear
 	 */
@@ -24,6 +38,32 @@ public class Game {
 		this.maze = new Maze(isMatrix);
 	}
 
-
-
+	/**
+	 * 
+	 */
+	public void loadGame() {
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public List<Integer> areaToLight(){
+		List<Integer> area = new ArrayList<Integer>();
+		
+		Vertex vertex = character.getPosition();
+		ArrayList<Edge<?>> edges = vertex.getEdges();
+		
+		for (int i = 0; i < edges.size(); i++) {
+			area.add(maze.getGraph().getIndexVertex((Path) edges.get(i).getDestination().getValue()));
+		}
+		return area;
+	}
+	
+	/**
+	 * 
+	 */
+	public List<Integer> iluminateLargerArea() {
+		return null;
+	}
 }
