@@ -16,7 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-public class StartWindowsController implements Initializable {
+public class StartWindowsController {
 	
 	
 	/**
@@ -42,8 +42,7 @@ public class StartWindowsController implements Initializable {
 	/**
 	 * 
 	 */
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
     	
     }
     
@@ -74,9 +73,11 @@ public class StartWindowsController implements Initializable {
 		}
 		
 		Game game = new Game();
+		game.loadGame();
+		
 		MazeGameController ven = loader.getController();
 		ven.setGame(game);
-		ven.setLoadGame(true);
+		ven.disableButtons();
 		
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.setScene(new Scene(root));
@@ -101,7 +102,6 @@ public class StartWindowsController implements Initializable {
 		Game game = new Game();
 		MazeGameController ven = loader.getController();
 		ven.setGame(game);
-		ven.setLoadGame(false);
 		
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.setScene(new Scene(root));

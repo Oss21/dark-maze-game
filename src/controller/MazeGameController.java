@@ -1,9 +1,5 @@
 package controller;
 
-import javafx.fxml.Initializable;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,10 +7,9 @@ import javafx.scene.layout.Pane;
 import model.Game;
 
 
-public class MazeGameController implements Initializable {
+public class MazeGameController {
 	
 	private Game game;
-	private boolean loadGame;
 	
     @FXML
     private Button btMatriz;
@@ -39,48 +34,48 @@ public class MazeGameController implements Initializable {
 
     @FXML
     private Pane pnMaze;
-	
-	
     
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-		
+    
+    
+    
+    public void initialize() {
+    	
     }
     
     
-    
-    public void setLoadGame(boolean loadGame) {
-		this.loadGame = loadGame;
-	}
-    
+       
     public void setGame(Game game) {
 		this.game = game;
 	}
     
+    public void disableButtons() {
+    	this.btLista.setDisable(true);
+    	this.btMatriz.setDisable(true);
+    }
     
     @FXML
     void backClicked(ActionEvent event) {
-
+    	System.out.println("Clicked");
     }
 
     @FXML
     void giveSolutionClicked(ActionEvent event) {
-
+    	
     }
 
     @FXML
     void listClicked(ActionEvent event) {
-
+    	game.genareteMaze(false);
     }
 
     @FXML
     void matrixClicked(ActionEvent event) {
-
+		game.genareteMaze(true);
     }
 
     @FXML
     void pointLightClicked(ActionEvent event) {
-
+    	
     }
 
     @FXML
@@ -93,6 +88,11 @@ public class MazeGameController implements Initializable {
 
     }
     
+    
+    
+    private void createMaze() {
+    	
+    }
     
 }
 
