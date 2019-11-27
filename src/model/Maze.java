@@ -127,7 +127,7 @@ public class Maze implements Serializable{
 	public void fillMatrixWithNumber() {
 		for (int i = 0; i < matriz.length; i++) {
 			for (int j = 0; j < matriz[i].length; j++) {
-				if(matriz[i][j] != "#") {
+				if(!matriz[i][j].equals("#")) {
 					matriz[i][j] = "V"+ numberOfSteps++;
 				}
 			}
@@ -148,7 +148,7 @@ public class Maze implements Serializable{
 				String[] value = finAdjacent(i,j).split(",");
 				int k = 0;	
 				while (k > value.length) {
-					if(value[k] != "NO") {
+					if(!value[k].equals("NO")) {
 						graphByLists.addEdge(matriz[i][j], value[k], GraphByLists.NOT_DIRECTED, COST,COST);
 					}
 					k++;
@@ -178,28 +178,28 @@ public class Maze implements Serializable{
 	public String finAdjacent(int x, int y) {
 		String result = null;
 		// Checks if there is a vertex above the origin vertex
-		if(matriz[x][y-1] != null) {
+		if(y-1 >= 0) {
 			result = checkUp(x, y)+",";
 		}else {
 			result = "NO"+",";
 		}
 		
 		// Checks if there is a vertex to the right of the origin vertex
-		if(matriz[x+1][y] != null ) {
+		if(x+1 < matriz.length) {
 			result = checkRight(x, y)+",";
 		}else {
 			result = "NO"+",";
 		}
 		
 		//Checks if there is a vertex to the left of the origin vertex
-		if(matriz[x-1][y] != null) {
+		if(x-1 >= 0) {
 			result = checkLeft(x, y)+",";
 		}else {
 			result = "NO"+",";
 		}
 		
 		// Checks if there is a vertex below the origin vertex
-		if(matriz[x][y+1] != null) {
+		if(y+1 < matriz[0].length) {
 			result = checkDown(x, y)+",";
 		}else {
 			result = "NO"+",";
@@ -220,7 +220,7 @@ public class Maze implements Serializable{
 	 * @return The value that is in that position or No if it does not exist. 
 	 */
 	private String checkUp(int x, int y) {
-		return (matriz[x][--y] != "#")? matriz[x][y]:"NO" ;
+		return (!matriz[x][--y].equals("#"))? matriz[x][y]:"NO" ;
 	}
 	
 	/**
@@ -231,7 +231,7 @@ public class Maze implements Serializable{
 	 * @return The value that is in that position or No if it does not exist. 
 	 */
 	private String checkRight(int x, int y) {
-		return (matriz[++x][y] != "#")? matriz[x][y] : "NO";
+		return (!matriz[++x][y].equals("#"))? matriz[x][y] : "NO";
 	}
 	
 
@@ -243,7 +243,7 @@ public class Maze implements Serializable{
 	 * @return The value that is in that position or No if it does not exist. 
 	 */
 	private String checkLeft(int x, int y) {
-		return (matriz[--x][y] != "#")? matriz[x][y] : "NO";
+		return (!matriz[--x][y].equals("#"))? matriz[x][y] : "NO";
 	}
 	
 	
@@ -255,9 +255,8 @@ public class Maze implements Serializable{
 	 * @return The value that is in that position or No if it does not exist. 
 	 */
 	private String checkDown(int x, int y) {
-		return (matriz[x][++y] != "#")? matriz[x][y] : "NO";
+		return (!matriz[x][++y].equals("#"))? matriz[x][y] : "NO";
 	}
-	
 	
 	
 	
