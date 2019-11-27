@@ -36,7 +36,7 @@ public class Maze implements Serializable{
 	/**
 	 * Representa al grafo cuando se utiliza con matrix de adyacencia
 	 */
-	private GraphByMatrix<String, Integer> graphByMatrix;
+	private GraphByMatrix<String, Double> graphByMatrix;
 
 	/**
 	 * Representa la lista de senderos en el grafo.
@@ -171,10 +171,38 @@ public class Maze implements Serializable{
 				}
 			}
 		}
-		System.out.println(graphByLists.getAdjList());
 	}
 		
-			
+	
+	/**
+	 * This method allows to create a  Matrix adyacent.
+	 *<pre>The matrix was already initialized and filled with their respective vertices </pre> 
+	 */
+	public void createMatrixAdyacent() {
+		this.graphByMatrix = new GraphByMatrix<String, Double>(numberOfSteps);
+		 //Allows to fill the matrix with the respective vertices.
+		for (int i = 0; i < aux_Matrix.length; i++) {
+			for (int j = 0; j < aux_Matrix[i].length; j++) {
+				if(!isWall(i, j) ) {
+					graphByMatrix.addVertex(aux_Matrix[i][j]);
+				}
+			}
+		}
+		for (int i = 0; i < aux_Matrix.length; i++) {
+			for (int j = 0; j < aux_Matrix[i].length; j++) {
+				String[] value = finAdjacent(i,j).split(",");
+				int k = 0;	
+				while (k < value.length) {
+					if(!matriz[i][j].equals("#") && !value[k].equals("NO")) {
+						graphByMatrix.addEdge(aux_Matrix[i][j], value[k],GraphByMatrix.NOT_DIRECTED, COST, COST);
+					}
+					k++;
+				}
+			}
+		}
+		
+
+	}
 
 
 

@@ -32,7 +32,7 @@ public class GraphByMatrix<T extends Comparable<T>, E extends Comparable<E>> imp
 	 */
 	private void initMatrix() {
 		for (int i = 0; i < adjMatrix.length; i++) {
-			for (int j = 0; j < adjMatrix[0].length; j++) {
+			for (int j = 0; j < adjMatrix[i].length; j++) {
 				adjMatrix[i][j] = new ArrayList<Edge<E>>();
 			}
 		}
@@ -149,6 +149,18 @@ public class GraphByMatrix<T extends Comparable<T>, E extends Comparable<E>> imp
 		return getEdgesOfVertex(valueVertex).size();
 	}
 
+	
+	
+	public void primMatriz() {
+		for (int i = 0; i < adjMatrix.length; i++) {
+			for (int j = 0; j < adjMatrix[i].length; j++) {
+				System.out.print(adjMatrix[i][j]+" ");
+			}
+			System.out.println();
+		}
+	}
+	
+	
 	/**
 	 * Gets the edges between two vertices.
 	 * 

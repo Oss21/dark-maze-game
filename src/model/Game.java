@@ -61,6 +61,7 @@ public class Game {
 		this.maze = new Maze(isMatrix);
 		this.maze.fillMatriz();
 		this.maze.createListAdyacent();
+		this.maze.createMatrixAdyacent();
 	}
 
 	/**

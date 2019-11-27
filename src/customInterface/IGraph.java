@@ -6,7 +6,14 @@ import dataStructure.Edge;
 
 public interface IGraph<T extends Comparable<T>, E extends Comparable<E>> {
 	
-	
+	/**
+	 * Determine that the graph is direct.
+	 */
+	public static final boolean DIRECTED = true;
+	/**
+	 * Determine that the graph is not direct
+	 */
+	public static final boolean NOT_DIRECTED = true;
 	/**
 	 * This method adds an edge to the graph
 	 * @param from Origin of the edge
