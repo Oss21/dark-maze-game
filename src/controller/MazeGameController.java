@@ -4,6 +4,7 @@ import java.io.IOException;
 
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import java.util.Optional;
@@ -18,8 +19,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Game;
 
@@ -32,6 +34,7 @@ public class MazeGameController {
 	private static final String LAKE_IMAGE_URL = "/img/agua.jpg";
 	private static final String QUICKSAND_IMAGE_URL = "/img/arena.png";
 	private static final String WALL_MAZE_IMAGE_URL = "/img/pared.jpg";
+	private static final String SAM_IMAGE_URL = "/img/Sam.gif";
 	
 	private Game game;
 	
@@ -59,6 +62,8 @@ public class MazeGameController {
     @FXML
     private ScrollPane spMaze;
     
+    private GridPane grid;
+    
     
     
     public void initialize() {
@@ -79,7 +84,6 @@ public class MazeGameController {
     @FXML
 	void backClicked(ActionEvent event) {
 
-    	
     	if(btSaveGame.isDisable()) {
     		
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("/userInterface/StartWindowGUI.fxml"));
@@ -120,11 +124,7 @@ public class MazeGameController {
 				stage.setScene(new Scene(root));
 				stage.show();
 			}
-
-
     	}
-    	
-
 	}
 
     @FXML
@@ -135,8 +135,11 @@ public class MazeGameController {
     @FXML
     void listClicked(ActionEvent event) {
     	try {
+    		Scene scene = (Scene) ((Node) event.getSource()).getScene().getWindow().getScene();
+    		
 			game.genareteMaze(false);
 	    	createMaze();
+	    	detectKeys(scene);
 			
 		} catch (IOException e) {
 			Alert alert = new Alert(AlertType.ERROR, "Se ha borrado o alterado el documento donde se tienen los datos del programa", ButtonType.CLOSE);
@@ -148,8 +151,11 @@ public class MazeGameController {
     @FXML
     void matrixClicked(ActionEvent event) {
 		try {
+			Scene scene = (Scene) ((Node) event.getSource()).getScene().getWindow().getScene();
+			
 			game.genareteMaze(true);
 			createMaze();
+			detectKeys(scene);
 			
 		} catch (IOException e) {
 			Alert alert = new Alert(AlertType.ERROR, "Se ha borrado o alterado el documento donde se tienen los datos del programa", ButtonType.CLOSE);
@@ -175,10 +181,13 @@ public class MazeGameController {
     }
   
     
+
+    
     public void createMaze() {
+
     	String[][] matrix =  this.game.getMaze().getMatriz();
     	
-    	GridPane grid = new GridPane();
+    	this.grid = new GridPane();
     	
     	Image p = new Image(PATH_IMAGE_URL);
     	Image w = new Image(WALL_IMAGE_URL);
@@ -186,7 +195,8 @@ public class MazeGameController {
     	Image l = new Image(LAKE_IMAGE_URL);
     	Image q = new Image(QUICKSAND_IMAGE_URL);
     	Image w2 = new Image(WALL_MAZE_IMAGE_URL);
-    	 
+    	Image sam = new Image(SAM_IMAGE_URL);
+    	
     	
     	for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[i].length; j++) {
@@ -195,36 +205,90 @@ public class MazeGameController {
 				iView.setFitWidth(50);
 				iView.setPreserveRatio(true);
 				
+				if (!matrix[i][j].equals("#")) {
+					iView.setId(matrix[i][j]);
+				}
+				
 				switch (matrix[i][j]) {
 				case "-":
 					iView.setImage(p);
+					iView.setId("p");
 					break;
 				case "p":
 					iView.setImage(p);
+					iView.setId("p");
 					break;
 				case "w":
 					iView.setImage(w);
+					iView.setId("w");
 					break;
 				case "h":
 					iView.setImage(h);
+					iView.setId("h");
 					break;
 				case "l":
 					iView.setImage(l);
+					iView.setId("l");
 					break;
 				case "q":
 					iView.setImage(q);
+					iView.setId("q");
 					break;
 				case "#":
 					iView.setImage(w2);
+					iView.setId("w2");
 					break;
+				case "en":
+					iView.setImage(sam);
+					iView.setId("player");
+					iView.setRotate(90);
+					break;
+				case "ex":
+					iView.setImage(p);
+					iView.setId("");
 				}
-				grid.add(iView, j, i);
+				this.grid.add(iView, j, i);
 			}
 			
 		}
     	spMaze.setContent(grid);
     }
     
+    private void detectKeys(Scene scene) {
+		
+    	scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				switch (event.getCode()) {
+					case UP:
+						
+						break;
+					case DOWN:
+						
+						break;
+					case RIGHT:
+						
+						break;
+					case LEFT:
+						
+						break;
+				}
+			}
+		});
+    	
+    	
+    	scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				
+			}
+		});
+    }
+    
+    
+    private void changePlayerPosition(KeyCode k) {
+    	
+    }
 }
 
 
