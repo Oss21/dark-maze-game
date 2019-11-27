@@ -7,10 +7,13 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.fxml.FXMLLoader;
 
-
+/**
+ * It is the class that launches the game.
+ */
 public class Main extends Application {
+	
 	/**
-	 *
+	 * Initialize the game.
 	 */
 	@Override
 	public void start(Stage stage) {
@@ -28,6 +31,10 @@ public class Main extends Application {
 		}
 	}
 	
+	/**
+	 * Launch the game
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}

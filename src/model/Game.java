@@ -16,29 +16,38 @@ import dataStructure.Edge;
 import dataStructure.Vertex;
 import javafx.scene.media.VideoTrack;
 
+/**
+ * Represents the game.
+ */
 public class Game {
 	
+	/**
+	 * Indicates the number of trails that the character can illuminate.
+	 */
 	public static final int LIGHTING_LIMIT = 3;
 	
 	/**
-	 * 
+	 * Is the character. 
 	 */
 	private Character character;
 	
 	/**
-	 * Representa el laberinto a crear
+	 * It represents the maze to create.
 	 */
 	private Maze maze;
 	
 	
 	/**
-	 * Crea un nuevo juego
+	 * Create a new game.
 	 */
 	public Game() {
 		
     }
 	
-	
+	/**
+	 * Return the maze.
+	 * @return maze - It's the maze.
+	 */
 	public Maze getMaze() {
 		return maze;
 	}
@@ -71,7 +80,6 @@ public class Game {
 		}catch (ClassNotFoundException e) {
 				e.printStackTrace();
 		}
-
 	}
 	
 	
@@ -93,10 +101,8 @@ public class Game {
 	}
 	
 	
-	
-	
 	/**
-	 * 
+	 * It is the area to illuminate.
 	 */
 	public List<Integer> areaToLight(){
 		List<Integer> area = new ArrayList<Integer>();
@@ -112,11 +118,10 @@ public class Game {
 	}
 	
 	/**
-	 * 
+	 * Illuminate the delimited area.
 	 */
 	public List<Integer> iluminateLargerArea() {
 		List<Integer> area = new ArrayList<Integer>();
-		
 		
 		
 		return null;
