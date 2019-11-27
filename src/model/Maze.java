@@ -168,7 +168,6 @@ public class Maze implements Serializable{
 		}
 	}
 		
-<<<<<<< Updated upstream
 	
 	/**
 	 * This method allows to create a Matrix.
@@ -201,8 +200,7 @@ public class Maze implements Serializable{
 	}
 
 
-=======
->>>>>>> Stashed changes
+
 
 	/**
 	 * This method checks if there are vertices around an origin vertex. 
