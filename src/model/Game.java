@@ -60,6 +60,7 @@ public class Game {
 	public void genareteMaze(boolean isMatrix) throws IOException{
 		this.maze = new Maze(isMatrix);
 		this.maze.fillMatriz();
+		this.maze.createListAdyacent();
 	}
 
 	/**

@@ -87,7 +87,18 @@ public class Maze implements Serializable{
 		return numberOfSteps;
 	}
 
-
+	/**
+	 * Check if the element in this position is a wall
+	 * @param x The x position of an origin vertex
+	 * @param y The y position of an origin vertex
+	 * @return True if it is a wall.
+	 */
+	private boolean isWall(int x, int y) {
+		return matriz[x][y].equals("#");
+	}
+	
+	
+	
 	
 	/**
 	 * This method fill the matrix according to the read
@@ -127,7 +138,7 @@ public class Maze implements Serializable{
 	public void fillMatrixWithNumber() {
 		for (int i = 0; i < matriz.length; i++) {
 			for (int j = 0; j < matriz[i].length; j++) {
-				if(!matriz[i][j].equals("#")) {
+				if(!isWall(i, j)) {
 					matriz[i][j] = "V"+ numberOfSteps++;
 				}
 			}
@@ -143,6 +154,14 @@ public class Maze implements Serializable{
 	 */
 	public void createListAdyacent() {
 		this.graphByLists = new GraphByLists<String, Double>(numberOfSteps);
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[i].length; j++) {
+				if(!isWall(i, j)) {
+					matriz[i][j] =""+ numberOfSteps++;
+					graphByLists.addVertex(matriz[i][j]);
+				}
+			}
+		}
 		for (int i = 0; i < matriz.length; i++) {
 			for (int j = 0; j < matriz[i].length; j++) {
 				String[] value = finAdjacent(i,j).split(",");
@@ -186,23 +205,23 @@ public class Maze implements Serializable{
 		
 		// Checks if there is a vertex to the right of the origin vertex
 		if(x+1 < matriz.length) {
-			result = checkRight(x, y)+",";
+			result += checkRight(x, y)+",";
 		}else {
-			result = "NO"+",";
+			result += "NO"+",";
 		}
 		
 		//Checks if there is a vertex to the left of the origin vertex
 		if(x-1 >= 0) {
-			result = checkLeft(x, y)+",";
+			result += checkLeft(x, y)+",";
 		}else {
-			result = "NO"+",";
+			result += "NO"+",";
 		}
 		
 		// Checks if there is a vertex below the origin vertex
 		if(y+1 < matriz[0].length) {
-			result = checkDown(x, y)+",";
+			result += checkDown(x, y)+",";
 		}else {
-			result = "NO"+",";
+			result += "NO"+",";
 		}
 		return result;
 	}
