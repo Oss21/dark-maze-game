@@ -207,7 +207,6 @@ public class MazeGameController {
 				
 				if (!matrix[i][j].equals("#")) {
 					iView.setId(matrix[i][j]);
-					iView.setImage(p);
 				}
 				
 				switch (matrix[i][j]) {
@@ -239,7 +238,7 @@ public class MazeGameController {
 					iView.setImage(w2);
 					iView.setId("w2");
 					break;
-				case "0":
+				case "en":
 					iView.setImage(sam);
 					iView.setId("player");
 					iView.setRotate(90);

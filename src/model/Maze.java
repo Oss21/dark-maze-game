@@ -24,6 +24,11 @@ public class Maze implements Serializable{
 	public String [][] matriz;
 	
 	/**
+	 * 
+	 */
+	private String [][] aux_Matrix;
+	
+	/**
 	 * Representa el grafo cuando se utiliza lista de adyacencia
 	 */
 	private GraphByLists<String, Double> graphByLists;
@@ -94,7 +99,7 @@ public class Maze implements Serializable{
 	 * @return True if it is a wall.
 	 */
 	private boolean isWall(int x, int y) {
-		return matriz[x][y].equals("#");
+		return aux_Matrix[x][y].equals("#");
 	}
 	
 	
@@ -115,13 +120,15 @@ public class Maze implements Serializable{
 		int row = Integer.parseInt(dimensiones[0]);
 		int column = Integer.parseInt(dimensiones[1]);
 		matriz = new String[row][column];
-		
+		aux_Matrix = new String[row][column]; 
 		line = lector.readLine();
 		int i = 0;
 		while(line != null) {
 			String[] elements = line.split(";");
 			for (int j = 0; j < matriz[i].length; j++) {
 				matriz[i][j] = elements[j];
+				aux_Matrix[i][j] = elements[j];
+				
 			}
 			i++;
 			line = lector.readLine();
@@ -132,18 +139,7 @@ public class Maze implements Serializable{
 	}
 	
 	
-	/**
-	 * This method allows to fill the matrix with the respective vertices.
-	 */
-	public void fillMatrixWithNumber() {
-		for (int i = 0; i < matriz.length; i++) {
-			for (int j = 0; j < matriz[i].length; j++) {
-				if(!isWall(i, j)) {
-					matriz[i][j] = "V"+ numberOfSteps++;
-				}
-			}
-		}
-	}
+
 
 	
 		
@@ -154,21 +150,22 @@ public class Maze implements Serializable{
 	 */
 	public void createListAdyacent() {
 		this.graphByLists = new GraphByLists<String, Double>(numberOfSteps);
-		for (int i = 0; i < matriz.length; i++) {
-			for (int j = 0; j < matriz[i].length; j++) {
-				if(!isWall(i, j)) {
-					matriz[i][j] =""+ numberOfSteps++;
-					graphByLists.addVertex(matriz[i][j]);
+		 //Allows to fill the matrix with the respective vertices.
+		for (int i = 0; i < aux_Matrix.length; i++) {
+			for (int j = 0; j < aux_Matrix[i].length; j++) {
+				if(!isWall(i, j) ) {
+					aux_Matrix[i][j] =""+ numberOfSteps++;
+					graphByLists.addVertex(aux_Matrix[i][j]);
 				}
 			}
 		}
-		for (int i = 0; i < matriz.length; i++) {
-			for (int j = 0; j < matriz[i].length; j++) {
+		for (int i = 0; i < aux_Matrix.length; i++) {
+			for (int j = 0; j < aux_Matrix[i].length; j++) {
 				String[] value = finAdjacent(i,j).split(",");
 				int k = 0;	
 				while (k > value.length) {
 					if(!value[k].equals("NO")) {
-						graphByLists.addEdge(matriz[i][j], value[k], GraphByLists.NOT_DIRECTED, COST,COST);
+						graphByLists.addEdge(aux_Matrix[i][j], value[k], GraphByLists.NOT_DIRECTED, COST,COST);
 					}
 					k++;
 				}
@@ -177,17 +174,10 @@ public class Maze implements Serializable{
 		//
 	}
 		
-		
-		
-	
-	
-	
-	
-	
-	
-	
-	
-	
+			
+
+
+
 	/**
 	 * This method checks if there are vertices around an origin vertex. 
 	 * @param x The x position of an origin vertex
@@ -278,6 +268,18 @@ public class Maze implements Serializable{
 	}
 	
 	
+	
+	
+	
+	public String[][] getAux_Matrix() {
+		return aux_Matrix;
+	}
+
+
+
+	public void setAux_Matrix(String[][] aux_Matrix) {
+		this.aux_Matrix = aux_Matrix;
+	}
 	
 	
 	
