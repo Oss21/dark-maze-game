@@ -1,13 +1,12 @@
 package dataStructure;
 
+import java.io.Serializable;
+
 /**
  * An aux class that helps the method Dijkstra.
- * 
- * 
- *
  * @param <T> The type of this class.
  */
-public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
+public class Node<T extends Comparable<T>> implements Comparable<Node<T>>, Serializable{
 
 	/**
 	 * The vertex that the node will have.
@@ -68,6 +67,9 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 		this.cost = cost;
 	}
 
+	/**
+	 * Compare two nodes.
+	 */
 	@Override
 	public int compareTo(Node<T> n) {
 

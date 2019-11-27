@@ -1,14 +1,13 @@
 package dataStructure;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * This class represents a vertex of a graph.
- * 
- *
  * @param <T> The graph type.
  */
-public class Vertex<T extends Comparable<T>> implements Comparable<Vertex<T>> {
+public class Vertex<T extends Comparable<T>> implements Comparable<Vertex<T>>, Serializable {
 
 	/**
 	 * The value of the vertex.
@@ -61,6 +60,9 @@ public class Vertex<T extends Comparable<T>> implements Comparable<Vertex<T>> {
 		this.value = value;
 	}
 
+	/**
+	 * Print the value of the vertex.
+	 */
 	@Override
 	public String toString() {
 
@@ -78,6 +80,9 @@ public class Vertex<T extends Comparable<T>> implements Comparable<Vertex<T>> {
 		return this.value == v.value;
 	}
 
+	/**
+	 * Compare two vertex.
+	 */
 	@Override
 	public int compareTo(Vertex<T> o) {
 

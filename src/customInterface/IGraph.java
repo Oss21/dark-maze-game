@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 import dataStructure.Edge;
 
-public interface IGraph<T extends Comparable<T>, E extends Comparable<E>> {
+/**
+ * Interface that represents a graph.
+ */
+public interface IGraph<T extends Comparable<T>, E extends Comparable<E>>  {
 	
 	/**
 	 * Determine that the graph is direct.
@@ -60,12 +63,12 @@ public interface IGraph<T extends Comparable<T>, E extends Comparable<E>> {
 	int getNumVertex();
 
 	/**
-	 * 
+	 * This method returns the list of edges of the vertex
 	 */
 	ArrayList<Edge<?>> getEdgesOfVertex(T vertex);
 	
 	/**
-	 * 
+	 * Returns the index of the vertex.
 	 */
 	int getIndexVertex(T valueVertex);
 }

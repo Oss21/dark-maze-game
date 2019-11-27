@@ -19,36 +19,38 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+/**
+ * Represents the driver of the start window
+ */
 public class StartWindowsController {
 
 	/**
-	 * 
+	 * Represent the new game button
 	 */
 	@FXML
 	private Button btNewGame;
 
 	/**
-	 * 
+	 * Represent the load game button
 	 */
 	@FXML
 	private Button btLoadGame;
 
 	/**
-	 * 
+	 * Represent the exit button
 	 */
 	@FXML
 	private Button btExit;
 
 	/**
-	 * 
+	 * It is the initiator of the window.
 	 */
 	public void initialize() {
 
 	}
 
 	/**
-	 * 
-	 * @param event
+	 * Control the action of clicking on the exit button.
 	 */
 	@FXML
 	void leaveClicked(ActionEvent event) {
@@ -56,8 +58,7 @@ public class StartWindowsController {
 	}
 
 	/**
-	 * 
-	 * @param event
+	 * Control the action of clicking on the load game button.
 	 */
 	@FXML
 	void loadGameClicked(ActionEvent event) {
@@ -86,8 +87,7 @@ public class StartWindowsController {
 	}
 
 	/**
-	 * 
-	 * @param event
+	 * Control the action of clicking on the new game button.
 	 */
 	@FXML
 	void newGameClicked(ActionEvent event) {
