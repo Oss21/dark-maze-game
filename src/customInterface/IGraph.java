@@ -13,7 +13,7 @@ public interface IGraph<T extends Comparable<T>, E extends Comparable<E>> {
 	/**
 	 * Determine that the graph is not direct
 	 */
-	public static final boolean NOT_DIRECTED = true;
+	public static final boolean NOT_DIRECTED = false;
 	/**
 	 * This method adds an edge to the graph
 	 * @param from Origin of the edge

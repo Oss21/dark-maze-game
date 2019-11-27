@@ -175,7 +175,7 @@ public class Maze implements Serializable{
 		
 	
 	/**
-	 * This method allows to create a  Matrix adyacent.
+	 * This method allows to create a Matrix.
 	 *<pre>The matrix was already initialized and filled with their respective vertices </pre> 
 	 */
 	public void createMatrixAdyacent() {

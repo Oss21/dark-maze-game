@@ -37,6 +37,10 @@ public class MazeGameController {
 	private static final String SAM_IMAGE_URL = "/img/Sam.gif";
 	
 	private Game game;
+	// BORRAR
+	private String[][] maze;
+	private String[][] vertexID;
+	private ImageView [][] paths;
 	
     @FXML
     private Button btMatriz;
@@ -184,9 +188,10 @@ public class MazeGameController {
 
     
     public void createMaze() {
-
-    	String[][] matrix =  this.game.getMaze().getMatriz();
-    	
+    		//BORRAR
+    	this.maze =  this.game.getMaze().getMatriz();
+    	this.vertexID = this.game.getMaze().getAux_Matrix();
+    	this.paths = new ImageView[maze.length][maze[0].length];
     	this.grid = new GridPane();
     	
     	Image p = new Image(PATH_IMAGE_URL);
@@ -198,55 +203,50 @@ public class MazeGameController {
     	Image sam = new Image(SAM_IMAGE_URL);
     	
     	
-    	for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix[i].length; j++) {
+    	for (int i = 0; i < maze.length; i++) {
+			for (int j = 0; j < maze[i].length; j++) {
 				
 				ImageView iView = new ImageView();
 				iView.setFitWidth(50);
 				iView.setPreserveRatio(true);
 				
-				if (!matrix[i][j].equals("#")) {
-					iView.setId(matrix[i][j]);
+				if (!maze[i][j].equals("#")) {
+					iView.setId(vertexID[i][j]);
+					System.out.println(iView.getId());
+				}else {
+					iView.setId("W");
 				}
 				
-				switch (matrix[i][j]) {
+				switch (maze[i][j]) {
 				case "-":
 					iView.setImage(p);
-					iView.setId("p");
 					break;
 				case "p":
 					iView.setImage(p);
-					iView.setId("p");
 					break;
 				case "w":
 					iView.setImage(w);
-					iView.setId("w");
 					break;
 				case "h":
 					iView.setImage(h);
-					iView.setId("h");
 					break;
 				case "l":
 					iView.setImage(l);
-					iView.setId("l");
 					break;
 				case "q":
 					iView.setImage(q);
-					iView.setId("q");
 					break;
 				case "#":
 					iView.setImage(w2);
-					iView.setId("w2");
 					break;
 				case "en":
 					iView.setImage(sam);
-					iView.setId("player");
 					iView.setRotate(90);
 					break;
 				case "ex":
 					iView.setImage(p);
-					iView.setId("");
 				}
+				this.paths[i][j] = iView;
 				this.grid.add(iView, j, i);
 			}
 			
