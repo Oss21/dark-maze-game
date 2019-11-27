@@ -51,7 +51,7 @@ public class Maze implements Serializable{
 	/**
 	 * Indicate how many steps are in the maze in the other words how many vertices are there.
 	 */
-	private int numberOfSteps;
+	private int numberOfSteps = 1;
 	
 	/**
 	 * Represents the cost of the road
@@ -119,15 +119,15 @@ public class Maze implements Serializable{
 		String [] dimensiones  = line.split(";");
 		int row = Integer.parseInt(dimensiones[0]);
 		int column = Integer.parseInt(dimensiones[1]);
-		matriz = new String[row][column];
 		aux_Matrix = new String[row][column]; 
+		matriz = new String[row][column];
 		line = lector.readLine();
 		int i = 0;
 		while(line != null) {
 			String[] elements = line.split(";");
 			for (int j = 0; j < matriz[i].length; j++) {
-				matriz[i][j] = elements[j];
 				aux_Matrix[i][j] = elements[j];
+				matriz[i][j] = elements[j];
 				
 			}
 			i++;
@@ -154,7 +154,7 @@ public class Maze implements Serializable{
 		for (int i = 0; i < aux_Matrix.length; i++) {
 			for (int j = 0; j < aux_Matrix[i].length; j++) {
 				if(!isWall(i, j) ) {
-					aux_Matrix[i][j] =""+ numberOfSteps++;
+					aux_Matrix[i][j] =""+numberOfSteps++;
 					graphByLists.addVertex(aux_Matrix[i][j]);
 				}
 			}
@@ -163,15 +163,15 @@ public class Maze implements Serializable{
 			for (int j = 0; j < aux_Matrix[i].length; j++) {
 				String[] value = finAdjacent(i,j).split(",");
 				int k = 0;	
-				while (k > value.length) {
-					if(!value[k].equals("NO")) {
+				while (k < value.length) {
+					if(!matriz[i][j].equals("#") && !value[k].equals("NO")) {
 						graphByLists.addEdge(aux_Matrix[i][j], value[k], GraphByLists.NOT_DIRECTED, COST,COST);
 					}
 					k++;
 				}
 			}
 		}
-		//
+		System.out.println(graphByLists.getAdjList());
 	}
 		
 			
@@ -194,7 +194,7 @@ public class Maze implements Serializable{
 		}
 		
 		// Checks if there is a vertex to the right of the origin vertex
-		if(x+1 < matriz.length) {
+		if(x+1 < aux_Matrix.length) {
 			result += checkRight(x, y)+",";
 		}else {
 			result += "NO"+",";
@@ -208,7 +208,7 @@ public class Maze implements Serializable{
 		}
 		
 		// Checks if there is a vertex below the origin vertex
-		if(y+1 < matriz[0].length) {
+		if(y+1 < aux_Matrix[0].length) {
 			result += checkDown(x, y)+",";
 		}else {
 			result += "NO"+",";
@@ -229,7 +229,7 @@ public class Maze implements Serializable{
 	 * @return The value that is in that position or No if it does not exist. 
 	 */
 	private String checkUp(int x, int y) {
-		return (!matriz[x][--y].equals("#"))? matriz[x][y]:"NO" ;
+		return (!aux_Matrix[x][--y].equals("#"))? aux_Matrix[x][y]:"NO" ;
 	}
 	
 	/**
@@ -240,7 +240,7 @@ public class Maze implements Serializable{
 	 * @return The value that is in that position or No if it does not exist. 
 	 */
 	private String checkRight(int x, int y) {
-		return (!matriz[++x][y].equals("#"))? matriz[x][y] : "NO";
+		return (!aux_Matrix[++x][y].equals("#"))? aux_Matrix[x][y] : "NO";
 	}
 	
 
@@ -252,7 +252,7 @@ public class Maze implements Serializable{
 	 * @return The value that is in that position or No if it does not exist. 
 	 */
 	private String checkLeft(int x, int y) {
-		return (!matriz[--x][y].equals("#"))? matriz[x][y] : "NO";
+		return (!aux_Matrix[--x][y].equals("#"))? aux_Matrix[x][y] : "NO";
 	}
 	
 	
@@ -264,7 +264,7 @@ public class Maze implements Serializable{
 	 * @return The value that is in that position or No if it does not exist. 
 	 */
 	private String checkDown(int x, int y) {
-		return (!matriz[x][++y].equals("#"))? matriz[x][y] : "NO";
+		return (!aux_Matrix[x][++y].equals("#"))? aux_Matrix[x][y] : "NO";
 	}
 	
 	
