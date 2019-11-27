@@ -12,39 +12,40 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 /**
- *
+ * It is the class that represents the maze
  */
 public class Maze implements Serializable{
 
+	
 	public static final String PATH_LABERINTO_1="resourses/data/laberinto_1.csv"; 
 	
 	/**
-	 * Representa el laberinto
+	 * Represents the maze.
 	 */
 	public String [][] matriz;
 	
 	/**
-	 * 
+	 * Represents the graph when adjacency list is used.
 	 */
 	private String [][] aux_Matrix;
 	
 	/**
-	 * Representa el grafo cuando se utiliza lista de adyacencia
+	 * Represents the graph when adjacency list is used.
 	 */
 	private GraphByLists<String, Double> graphByLists;
 	
 	/**
-	 * Representa al grafo cuando se utiliza con matrix de adyacencia
+	 * Represents the graph when used with adjacency matrix.
 	 */
 	private GraphByMatrix<String, Double> graphByMatrix;
 
 	/**
-	 * Representa la lista de senderos en el grafo.
+	 * Represents the list of trails in the graph.
 	 */
 	private HashMap<Integer,Path> hashMapPaths;
 
 	/**
-	 * Indica si el grafo se implementa como una matrix o una lista de adjacencia.
+	 * Indicates whether the graph is implemented as a matrix or an adjacency list.
 	 */
 	private boolean isMatrix;
 
@@ -61,8 +62,9 @@ public class Maze implements Serializable{
 	
 
 	/**
-	 * Crea un laberinto
-	 * @param isMatrix - indica el tipo de implementacion del grafo.
+	 * Create a maze
+	 * 
+	 * @param isMatrix - Indicates the type of graph implementation.
 	 */
 	public Maze(boolean isMatrix) {
 //		if (isMatrix) {
@@ -78,7 +80,7 @@ public class Maze implements Serializable{
 	
 	
 	/**
-	 * 
+	 * Returns the adjacency matrix.
 	 */
 	public String[][] getMatriz() {
 		return matriz;
@@ -102,9 +104,7 @@ public class Maze implements Serializable{
 		return aux_Matrix[x][y].equals("#");
 	}
 	
-	
-	
-	
+
 	/**
 	 * This method fill the matrix according to the read
 	 * file that contains the dimensions of the matrix and its template.
@@ -139,11 +139,6 @@ public class Maze implements Serializable{
 	}
 	
 	
-
-
-	
-		
-	
 	/**
 	 * This method allows to create a list adyacent.
 	 *<pre>The matrix was already initialized and filled with their respective vertices </pre> 
@@ -173,6 +168,7 @@ public class Maze implements Serializable{
 		}
 	}
 		
+<<<<<<< Updated upstream
 	
 	/**
 	 * This method allows to create a  Matrix adyacent.
@@ -205,6 +201,8 @@ public class Maze implements Serializable{
 	}
 
 
+=======
+>>>>>>> Stashed changes
 
 	/**
 	 * This method checks if there are vertices around an origin vertex. 

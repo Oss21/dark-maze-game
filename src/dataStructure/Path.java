@@ -1,16 +1,14 @@
 package dataStructure;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * A class that represents a path.
- * 
- * 
- *
  * @param <T> The vertex type.
  * @param <E> The edge type.
  */
-public class Path<T extends Comparable<T>, E extends Comparable<E>> implements Comparable<Path<T, E>> {
+public class Path<T extends Comparable<T>, E extends Comparable<E>> implements Comparable<Path<T, E>>, Serializable {
 
 	/**
 	 * The graph by lists that the path uses.
@@ -69,14 +67,24 @@ public class Path<T extends Comparable<T>, E extends Comparable<E>> implements C
 		this.path = path;
 	}
 
+	/**
+	 * Returns a paths list.
+	 */
 	public ArrayList<Vertex<T>> getVertices() {
 		return vertices;
 	}
 
+	/**
+	 * Change a paths list
+	 * @param vertices
+	 */
 	public void setVertices(ArrayList<Vertex<T>> vertices) {
 		this.vertices = vertices;
 	}
 
+	/**
+	 * Compare to paths
+	 */
 	@Override
 	public int compareTo(Path<T, E> o) {
 		return 0;
@@ -137,8 +145,10 @@ public class Path<T extends Comparable<T>, E extends Comparable<E>> implements C
 
 	}
 
+	/**
+	 * Print the path
+	 */
 	@Override
-
 	public String toString() {
 
 		String path = "";

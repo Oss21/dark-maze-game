@@ -1,12 +1,16 @@
 package dataStructure;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Stack;
 
 import customInterface.IGraph;
 
-public class GraphByLists<T extends Comparable<T>, E extends Comparable<E>> implements IGraph<T, E> {
+/**
+ *  Class representing the implementation of an adjacency list.
+ */
+public class GraphByLists<T extends Comparable<T>, E extends Comparable<E>> implements IGraph<T, E>, Serializable {
 
 	
 	/**
@@ -50,6 +54,9 @@ public class GraphByLists<T extends Comparable<T>, E extends Comparable<E>> impl
 		return index;
 	}
 
+	/**
+	 * Create an edge between two vertices.
+	 */
 	@Override
 	public void addEdge(T from, T destination, boolean directed, double cost, E value) {
 		int f = getIndexVertex(from);
@@ -70,22 +77,34 @@ public class GraphByLists<T extends Comparable<T>, E extends Comparable<E>> impl
 		}
 	}
 
+	/**
+	 * Remove an edge between two vertices.
+	 */
 	@Override
 	public void removeEdge(T from, T destination, boolean directed, double cost) {
 
 	}
 
+	/**
+	 * Add a vertex to the graph.
+	 */
 	@Override
 	public void addVertex(T valueVertex) {
 		vertices.add(new Vertex<T>(valueVertex));
 		adjList.add(new ArrayList<Vertex<T>>());
 	}
 
+	/**
+	 * Remove a vertex to the graph.
+	 */
 	@Override
 	public void removeVertex(T valueVertex) {
 
 	}
 
+	/**
+	 * Check if two vertices are adjacent.
+	 */
 	@Override
 	public boolean isAdjacent(T vertexA, T vertexB) {
 		boolean is = false;
@@ -98,6 +117,9 @@ public class GraphByLists<T extends Comparable<T>, E extends Comparable<E>> impl
 		return is;
 	}
 
+	/**
+	 * Returns the number of vertices.
+	 */
 	@Override
 	public int getNumVertex() {
 		return adjList.size();
@@ -142,18 +164,32 @@ public class GraphByLists<T extends Comparable<T>, E extends Comparable<E>> impl
 		return edgesBetween;
 	}
 
+	/**
+	 * Returns the vertices list.
+	 */
 	public ArrayList<Vertex<T>> getVertices() {
 		return vertices;
 	}
 
+	/**
+	 * Change the vertices list.
+	 * @param vertices -the new vertices list.
+	 */
 	public void setVertices(ArrayList<Vertex<T>> vertices) {
 		this.vertices = vertices;
 	}
 
+	/**
+	 * Returns the edges list.
+	 */
 	public ArrayList<Edge<E>> getEdges() {
 		return edges;
 	}
 
+	/**
+	 * Change the edge list
+	 * @param edges -The new edge list
+	 */
 	public void setEdges(ArrayList<Edge<E>> edges) {
 		this.edges = edges;
 	}

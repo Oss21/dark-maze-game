@@ -25,62 +25,134 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Game;
 
-
+/**
+ * Represents the controller of the game window.
+ */
 public class MazeGameController {
 	
+	/**
+	 * It is the image path of path.
+	 */
 	private static final String PATH_IMAGE_URL = "/img/cesped.jpg";
+	
+	/**
+	 * It is the image path of wall.
+	 */
 	private static final String WALL_IMAGE_URL = "/img/dique.jpg";
+	
+	/**
+	 * It is the image path of hole.
+	 */
 	private static final String HOLE_IMAGE_URL = "/img/hole.png";
+	
+	/**
+	 * It is the image path of lake.
+	 */
 	private static final String LAKE_IMAGE_URL = "/img/agua.jpg";
+	
+	/**
+	 * It is the image path of quicksand.
+	 */
 	private static final String QUICKSAND_IMAGE_URL = "/img/arena.png";
+
+	/**
+	 * It is the image path of wall
+	 */
 	private static final String WALL_MAZE_IMAGE_URL = "/img/pared.jpg";
+	
+	/**
+	 * It is the image path of Sam
+	 */
 	private static final String SAM_IMAGE_URL = "/img/Sam.gif";
 	
+	/**
+	 * It is the matrix button
+	 */
 	private Game game;
 	
+    /**
+     * It is the matrix button
+     */
     @FXML
     private Button btMatriz;
 
+    /**
+     * It is the list button
+     */
     @FXML
     private Button btList;
 
+     /**
+     * It is the give solution button
+     */
     @FXML
     private Button btGiveSolution;
 
+    /**
+     * It is go to point light button
+     */
     @FXML
     private Button btGoToPointLight;
 
+    /**
+     * It is the use flashlight
+     */
     @FXML
     private Button btUseFlashlight;
 
+    /**
+     * It is save game button
+     */
     @FXML
     private Button btSaveGame;
 
+
+    /**
+     * It is the back button
+     */
     @FXML
     private Button btBack;
 
+    /**
+     * It is the pane for print the maze.
+     */
     @FXML
     private ScrollPane spMaze;
     
+    /**
+     * It is the relation with the game.
+     */
     private GridPane grid;
     
     
-    
+    /**
+     * It is the initiator of the window methods
+     */
     public void initialize() {
     	
     }
     
     
-       
+    /**
+     * Change the game.
+     * @param game - The new game
+     */   
     public void setGame(Game game) {
 		this.game = game;
 	}
     
+    
+    /**
+     * Disable the create graph buttons
+     */
     public void disableButtons() {
     	this.btList.setDisable(true);
     	this.btMatriz.setDisable(true);
     }
     
+    /**
+   	 * Control the action of clicking on the back button.
+   	 */
     @FXML
 	void backClicked(ActionEvent event) {
 
@@ -127,11 +199,15 @@ public class MazeGameController {
     	}
 	}
 
+    /**
+  	 * Control the action of clicking on the give solution button.
+  	 */
     @FXML
     void giveSolutionClicked(ActionEvent event) {
     	
     }
 
+   
     @FXML
     void listClicked(ActionEvent event) {
     	try {
@@ -148,6 +224,9 @@ public class MazeGameController {
 		}
     }
 
+    /**
+  	 * Control the action of clicking on the matrix button.
+  	 */
     @FXML
     void matrixClicked(ActionEvent event) {
 		try {
@@ -164,25 +243,34 @@ public class MazeGameController {
 		}
     }
 
+    /**
+  	 * Control the action of clicking on the point light button.
+  	 */
     @FXML
     void pointLightClicked(ActionEvent event) {
     	
     }
 
+    /**
+	 * Control the action of clicking on the save game button.
+	 */
     @FXML
     void saveGameClicked(ActionEvent event) {
     	game.saveGame();
     	btSaveGame.setDisable(true);
     }
 
+    /**
+	 * Control the action of clicking on the use flashlight button.
+	 */
     @FXML
     void useFlashlightClicked(ActionEvent event) {
 
     }
-  
-    
-
-    
+ 
+    /**
+     * Create the maze
+     */
     public void createMaze() {
 
     	String[][] matrix =  this.game.getMaze().getMatriz();
@@ -254,6 +342,9 @@ public class MazeGameController {
     	spMaze.setContent(grid);
     }
     
+    /**
+     * Detects when keyboard keys are pressed.
+     */
     private void detectKeys(Scene scene) {
 		
     	scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -285,7 +376,10 @@ public class MazeGameController {
 		});
     }
     
-    
+    /**
+     * 
+     * @param k
+     */
     private void changePlayerPosition(KeyCode k) {
     	
     }

@@ -1,5 +1,6 @@
 package dataStructure;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -11,7 +12,8 @@ import java.util.*;
  *        algorithms.
  * @param <E> The edge type of a graph that this class will do graph algorithms.
  */
-public class MethodsGraphs<T extends Comparable<T>, E extends Comparable<E>> {
+public class MethodsGraphs<T extends Comparable<T>, E extends Comparable<E>> implements Serializable {
+	
 	/**
 	 * Constructor of MethodsGraph.
 	 */

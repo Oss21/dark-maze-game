@@ -1,14 +1,33 @@
 package dataStructure;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import customInterface.IGraph;
 
-public class GraphByMatrix<T extends Comparable<T>, E extends Comparable<E>> implements IGraph<T, E> {
+/**
+ * Class representing the implementation of an adjacency matrices.
+ */
+public class GraphByMatrix<T extends Comparable<T>, E extends Comparable<E>> implements IGraph<T, E>, Serializable {
 
+	/**
+	 * It is the adjacent matrix.
+	 */
 	private ArrayList<Edge<E>>[][] adjMatrix;
+
+	/**
+	 * It is the verteces list.
+	 */
 	private ArrayList<Vertex<T>> vertices;
+	
+	/**
+	 * It is the edges list.
+	 */
 	private ArrayList<Edge<E>> edges;
+	
+	/**
+	 * It is the number of vertex.
+	 */
 	private int numVertex;
 
 	/**
@@ -38,6 +57,9 @@ public class GraphByMatrix<T extends Comparable<T>, E extends Comparable<E>> imp
 		}
 	}
 
+	/**
+	 * Change the edge list.
+	 */
 	public void setEdges(ArrayList<Edge<E>> edges) {
 		this.edges = edges;
 	}
@@ -59,6 +81,9 @@ public class GraphByMatrix<T extends Comparable<T>, E extends Comparable<E>> imp
 		return index;
 	}
 
+	/**
+	 * Create an edge between two vertices.
+	 */
 	@Override
 	public void addEdge(T from, T destination, boolean directed, double cost, E value) {
 		int f = getIndexVertex(from);
@@ -79,6 +104,9 @@ public class GraphByMatrix<T extends Comparable<T>, E extends Comparable<E>> imp
 		}
 	}
 
+	/**
+	 * Remove an edge between two vertices.
+	 */
 	@Override
 	public void removeEdge(T from, T destination, boolean directed, double cost) {
 		int f = getIndexVertex(from);
@@ -98,17 +126,26 @@ public class GraphByMatrix<T extends Comparable<T>, E extends Comparable<E>> imp
 		}
 	}
 
+	/**
+	 * Add a vertex to the graph.
+	 */
 	@Override
 	public void addVertex(T valueVertex) {
 		if (vertices.size() < numVertex)
 			vertices.add(new Vertex<T>(valueVertex));
 	}
 
+	/**
+	 * Remove a vertex to the graph.
+	 */
 	@Override
 	public void removeVertex(T valueVertex) {
 
 	}
 
+	/**
+	 * Check if two vertices are adjacent.
+	 */
 	@Override
 	public boolean isAdjacent(T vertexA, T vertexB) {
 		boolean is = false;
@@ -176,23 +213,40 @@ public class GraphByMatrix<T extends Comparable<T>, E extends Comparable<E>> imp
 		return edges;
 	}
 
+	/**
+	 * Returns the number of vertices.
+	 */
 	@Override
 	public int getNumVertex() {
 		return vertices.size();
 	}
 
+	/**
+	 * Returns the adjacent matrix.
+	 */
 	public ArrayList<Edge<E>>[][] getAdjMatrix() {
 		return adjMatrix;
 	}
 
+	/**
+	 *  Change the adjacent matrix.
+	 * @param adjMatrix - The new adjacent matrix.
+	 */
 	public void setAdjMatrix(ArrayList<Edge<E>>[][] adjMatrix) {
 		this.adjMatrix = adjMatrix;
 	}
 
+	/**
+	 * Returns the vertices list.
+	 */
 	public ArrayList<Vertex<T>> getVertices() {
 		return vertices;
 	}
 
+	/**
+	 * Change the vertices list.
+	 * @param vertices -the new vertices list.
+	 */
 	public void setVertices(ArrayList<Vertex<T>> vertices) {
 		this.vertices = vertices;
 	}
@@ -223,6 +277,9 @@ public class GraphByMatrix<T extends Comparable<T>, E extends Comparable<E>> imp
 		return g;
 	}
 
+	/**
+	 * Returns the edges list.
+	 */
 	public ArrayList<Edge<E>> getEdges() {
 		return edges;
 	}

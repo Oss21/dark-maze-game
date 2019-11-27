@@ -1,12 +1,12 @@
 package dataStructure;
 
+import java.io.Serializable;
+
 /**
  * This class represents an edge of a graph. 
- * 
- *
  * @param <E> The edge type.
  */
-public class Edge<E extends Comparable<E>> implements Comparable<Edge<E>> {
+public class Edge<E extends Comparable<E>> implements Comparable<Edge<E>>, Serializable {
 
 	/**
 	 * The value E that the edge will contain.
@@ -145,7 +145,9 @@ public class Edge<E extends Comparable<E>> implements Comparable<Edge<E>> {
 		this.cost = cost;
 	}
 
-	
+	/**
+	 * Compare two edges
+	 */
 	@Override
 	public int compareTo(Edge<E> e) {
 
@@ -165,6 +167,7 @@ public class Edge<E extends Comparable<E>> implements Comparable<Edge<E>> {
 
 	}
 
+	
 	@Override
 	public String toString() {
 
