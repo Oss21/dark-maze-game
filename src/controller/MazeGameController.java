@@ -8,6 +8,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import java.util.Optional;
+
+import dataStructure.Vertex;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -24,6 +26,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Game;
+import model.Maze;
 
 /**
  * Represents the controller of the game window.
@@ -69,10 +72,61 @@ public class MazeGameController {
 	 * It is the matrix button
 	 */
 	private Game game;
-	// BORRAR
+	
+	/**
+	 * It represents the condition of whether the game has been loaded from a previously played game, or is a new game
+	 */
+	public boolean isLoaded;
+	
+	/**
+	 * Matrix containing the characters of the maze
+	 */
 	private String[][] maze;
+	
+	/**
+	 * Matrix containing the identifiers of the vertices
+	 */
 	private String[][] vertexID;
+	
+	/**
+	 * Matrix that contains the images that the screen maze represents
+	 */
 	private ImageView [][] paths;
+
+	/**
+	 * Image representing the path where the player can pass without any problem
+	 */
+	private Image path;
+	
+	/**
+	 * Image representing the obstacle of a wall in the maze
+	 */
+	private Image wall;
+	
+	/**
+	 * Image representing the obstacle of a hole in the maze
+	 */
+	private Image hole;
+	
+	/**
+	 * Image representing the water obstacle in the maze
+	 */
+	private Image lake;
+	
+	/**
+	 * Image representing the obstacle of quicksand in the maze
+	 */
+	private Image quickSand;
+	
+	/**
+	 * Image representing the limiting walls of the maze
+	 */
+	private Image wallMaze;
+	
+	/**
+	 * Image representing the playable character of the maze
+	 */
+	private Image sam;
 	
     /**
      * It is the matrix button
@@ -110,7 +164,6 @@ public class MazeGameController {
     @FXML
     private Button btSaveGame;
 
-
     /**
      * It is the back button
      */
@@ -129,12 +182,20 @@ public class MazeGameController {
     private GridPane grid;
     
     
+    
     /**
      * It is the initiator of the window methods
      */
     public void initialize() {
-    	
+    	path = new Image(PATH_IMAGE_URL);
+    	wall = new Image(WALL_IMAGE_URL);
+    	hole = new Image(HOLE_IMAGE_URL);
+    	lake = new Image(LAKE_IMAGE_URL);
+    	quickSand = new Image(QUICKSAND_IMAGE_URL);
+    	wallMaze = new Image(WALL_MAZE_IMAGE_URL);
+    	sam = new Image(SAM_IMAGE_URL);
     }
+    
     
     
     /**
@@ -147,6 +208,14 @@ public class MazeGameController {
     
     
     /**
+     * Method that changes the condition of whether the game has been loaded from a previously played game, or is a new game
+     */
+    public void setIsLoaded(boolean isLoaded) {
+    	this.isLoaded = isLoaded;
+    }
+    
+    
+    /**
      * Disable the create graph buttons
      */
     public void disableButtons() {
@@ -154,14 +223,13 @@ public class MazeGameController {
     	this.btMatriz.setDisable(true);
     }
     
+    
     /**
    	 * Control the action of clicking on the back button.
    	 */
     @FXML
 	void backClicked(ActionEvent event) {
-
     	if(btSaveGame.isDisable()) {
-    		
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("/userInterface/StartWindowGUI.fxml"));
 			Parent root = null;
 			
@@ -176,15 +244,11 @@ public class MazeGameController {
 			stage.show();
     		
     	}else {
-    		
-    		Alert alert = new Alert(AlertType.CONFIRMATION, "Si no ha guardado su progreso en el juego, se borrará.",
-					ButtonType.OK, ButtonType.CANCEL);
+    		Alert alert = new Alert(AlertType.CONFIRMATION, "Si no ha guardado su progreso en el juego, se borrará.", ButtonType.OK, ButtonType.CANCEL);
 			alert.setHeaderText("¿Seguro desea salir sin guardar el juego");
 	
 			Optional<ButtonType> result = alert.showAndWait();
 
-		
-				
 			if (result.get().equals(ButtonType.OK)) {
 				
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/userInterface/StartWindowGUI.fxml"));
@@ -203,6 +267,7 @@ public class MazeGameController {
     	}
 	}
 
+    
     /**
   	 * Control the action of clicking on the give solution button.
   	 */
@@ -211,7 +276,11 @@ public class MazeGameController {
     	
     }
 
-   
+    
+   /**
+    * 
+    * @param event
+    */
     @FXML
     void listClicked(ActionEvent event) {
     	try {
@@ -228,6 +297,7 @@ public class MazeGameController {
 		}
     }
 
+    
     /**
   	 * Control the action of clicking on the matrix button.
   	 */
@@ -247,6 +317,7 @@ public class MazeGameController {
 		}
     }
 
+    
     /**
   	 * Control the action of clicking on the point light button.
   	 */
@@ -255,6 +326,7 @@ public class MazeGameController {
     	
     }
 
+    
     /**
 	 * Control the action of clicking on the save game button.
 	 */
@@ -264,6 +336,7 @@ public class MazeGameController {
     	btSaveGame.setDisable(true);
     }
 
+    
     /**
 	 * Control the action of clicking on the use flashlight button.
 	 */
@@ -272,24 +345,16 @@ public class MazeGameController {
 
     }
  
+    
     /**
-     * Create the maze
+     * Method that paints the screen maze
      */
     public void createMaze() {
-    		//BORRAR
     	this.maze =  this.game.getMaze().getMatriz();
     	this.vertexID = this.game.getMaze().getAux_Matrix();
     	this.paths = new ImageView[maze.length][maze[0].length];
+    	
     	this.grid = new GridPane();
-    	
-    	Image p = new Image(PATH_IMAGE_URL);
-    	Image w = new Image(WALL_IMAGE_URL);
-    	Image h = new Image(HOLE_IMAGE_URL);
-    	Image l = new Image(LAKE_IMAGE_URL);
-    	Image q = new Image(QUICKSAND_IMAGE_URL);
-    	Image w2 = new Image(WALL_MAZE_IMAGE_URL);
-    	Image sam = new Image(SAM_IMAGE_URL);
-    	
     	
     	for (int i = 0; i < maze.length; i++) {
 			for (int j = 0; j < maze[i].length; j++) {
@@ -300,41 +365,57 @@ public class MazeGameController {
 				
 				if (!maze[i][j].equals("#")) {
 					iView.setId(vertexID[i][j]);
-					System.out.println(iView.getId());
+
 				}else {
-					iView.setId("W");
+					iView.setId("#");
 				}
 				
 				switch (maze[i][j]) {
 				case "-":
-					iView.setImage(p);
+					iView.setImage(path);
+					this.paths[i][j] = iView;
 					break;
-				case "p":
-					iView.setImage(p);
+					
+				case Maze.PATH_IDENTIFIER:
+					iView.setImage(path);
+					this.paths[i][j] = iView;
 					break;
-				case "w":
-					iView.setImage(w);
+					
+				case Maze.WALL_IDENTIFIER:
+					iView.setImage(wall);
+					this.paths[i][j] = iView;
 					break;
-				case "h":
-					iView.setImage(h);
+					
+				case Maze.HOLE_IDENTIFIER:
+					iView.setImage(hole);
+					this.paths[i][j] = iView;
 					break;
-				case "l":
-					iView.setImage(l);
+					
+				case Maze.LAKE_IDENTIFIER:
+					iView.setImage(lake);
+					this.paths[i][j] = iView;
 					break;
-				case "q":
-					iView.setImage(q);
+					
+				case Maze.QUICKSAND_IDENTIFIER:
+					iView.setImage(quickSand);
+					this.paths[i][j] = iView;
 					break;
-				case "#":
-					iView.setImage(w2);
+					
+				case Maze.WALL_MAZE_IDENTIFIER:
+					iView.setImage(wallMaze);
+					this.paths[i][j] = iView;
 					break;
+					
 				case "en":
-					iView.setImage(sam);
-					iView.setRotate(90);
+					iView.setImage(path);
+					this.paths[i][j] = iView;
+					printPlayerOnMaze(i,j, iView);
 					break;
+					
 				case "ex":
-					iView.setImage(p);
+					iView.setImage(path);
+					this.paths[i][j] = iView;
 				}
-				this.paths[i][j] = iView;
 				this.grid.add(iView, j, i);
 			}
 			
@@ -342,47 +423,142 @@ public class MazeGameController {
     	spMaze.setContent(grid);
     }
     
+    
     /**
-     * Detects when keyboard keys are pressed.
+     * 
      */
-    private void detectKeys(Scene scene) {
-		
+    private void printPlayerOnMaze(int i, int j, ImageView imageView) {
+    	if (isLoaded) {
+    		System.out.println("Cargado");
+			int[] c = getCoordenate(this.game.getMaze().getGraph().getIndexVertex(this.game.getMaze().getCharacter().getPosition().getValue()));
+			paths[c[0]][c[1]].setImage(sam);
+			
+		}else {
+			System.out.println("Nuevo");
+			this.game.getMaze().getCharacter().setPosition(this.game.getMaze().getGraph().searchVertex(Integer.parseInt(vertexID[i][j])));
+			imageView.setImage(sam);
+		}
+    }
+    
+    
+    /**
+     * Method that is responsible for detecting and executing the events of buttons A, W, S, D
+     */
+    public void detectKeys(Scene scene) {
     	scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
 				switch (event.getCode()) {
-					case UP:
-						
+					case W:
+						changePositionUp();
 						break;
-					case DOWN:
-						
+					case S:
+						changePositionDown();
 						break;
-					case RIGHT:
-						
+					case D:
+						changePositionRight();
 						break;
-					case LEFT:
-						
+					case A:
+						changePositionLeft();
 						break;
 				}
 			}
 		});
-    	
-    	
-    	scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				
-			}
-		});
     }
     
+    
     /**
-     * 
-     * @param k
+     * Method responsible for determining the coordinates of the vertex within the containers of the images
+     * @param number - It is the number to be determined within the matrix of the images
+     * @return - An array of two positions, y, which represents the row in the matrix and, j, which represents the row.
      */
-    private void changePlayerPosition(KeyCode k) {
+    private int[] getCoordenate(int number) {
+    	int[] coordenate = new int[2];
+    	boolean stop = false;
     	
+    	for (int i = 0; i < paths.length && !stop; i++) {
+			for (int j = 0; j < paths[i].length && !stop; j++) {
+				
+				if (!paths[i][j].getId().equals("#")) {
+					int numero = (int) Integer.parseInt(paths[i][j].getId());
+					if (numero == number) {
+						coordenate[0] = i;
+						coordenate[1] = j;
+					}
+				}
+			}
+		}
+    	return coordenate;
     }
+    
+    
+    /**
+     * Method that is responsible for changing the position of the game character up.
+     */
+    private void changePositionUp() {
+    	Vertex vertex = this.game.getMaze().getCharacter().getPosition();
+    	int[] c = getCoordenate(game.getMaze().getGraph().getIndexVertex(vertex.getValue()));
+    	
+    	if ((c[0] - 1) >= 0) {
+    		if (!paths[c[0]-1][c[1]].getId().equals("#")) {
+        		paths[c[0]-1][c[1]].setImage(sam);
+        		paths[c[0]-1][c[1]].setRotate(270);
+        		this.game.getMaze().getCharacter().setPosition(this.game.getMaze().getGraph().searchVertex(Integer.parseInt(paths[c[0]-1][c[1]].getId())));
+    		}
+		}
+    }
+    
+    
+    /**
+     * Method that is responsible for changing the position of the game character down.
+     */
+    private void changePositionDown() {
+    	Vertex vertex = this.game.getMaze().getCharacter().getPosition();
+    	int[] c = getCoordenate(game.getMaze().getGraph().getIndexVertex(vertex.getValue()));
+    	
+    	if ((c[0] + 1) <= maze.length) {
+    		if (!paths[c[0]+1][c[1]].getId().equals("#")) {
+    			paths[c[0]+1][c[1]].setImage(sam);
+    			paths[c[0]+1][c[1]].setRotate(90);
+    			this.game.getMaze().getCharacter().setPosition(this.game.getMaze().getGraph().searchVertex(Integer.parseInt(paths[c[0]+1][c[1]].getId())));
+			}
+		}
+    }
+    
+    
+    /**
+     * Method that is responsible for changing the position of the game character to the right.
+     */
+    private void changePositionRight() {
+    	Vertex vertex = this.game.getMaze().getCharacter().getPosition();
+    	int[] c = getCoordenate(game.getMaze().getGraph().getIndexVertex(vertex.getValue()));
+    	
+    	if ((c[1] + 1) <= maze[0].length) {
+    		if (!paths[c[0]][c[1]+1].getId().equals("#")) {
+    			paths[c[0]][c[1]+1].setImage(sam);
+    			paths[c[0]][c[1]+1].setRotate(0);
+    			this.game.getMaze().getCharacter().setPosition(this.game.getMaze().getGraph().searchVertex(Integer.parseInt(paths[c[0]][c[1]+1].getId())));
+			}
+		}
+    }
+    
+    
+    /**
+     * Method that is responsible for changing the position of the game character to the left.
+     */
+    private void changePositionLeft() {
+    	Vertex vertex = this.game.getMaze().getCharacter().getPosition();
+    	int[] c = getCoordenate(game.getMaze().getGraph().getIndexVertex(vertex.getValue()));
+    	
+    	if ((c[1] - 1) >= 0) {
+    		if (!paths[c[0]][c[1]-1].getId().equals("#")) {
+    			paths[c[0]][c[1]-1].setImage(sam);
+    			paths[c[0]][c[1]-1].setRotate(180);
+    			this.game.getMaze().getCharacter().setPosition(this.game.getMaze().getGraph().searchVertex(Integer.parseInt(paths[c[0]][c[1]-1].getId())));
+			}
+		}
+    }
+    
 }
 
 

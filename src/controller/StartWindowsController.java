@@ -66,10 +66,12 @@ public class StartWindowsController {
 		Game game = new Game();
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/userInterface/MazeGameGUI.fxml"));
+		Scene scene = null;
 		Parent root = null;
 
 		try {
 			root = loader.load();
+			scene = new Scene(root);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -78,11 +80,13 @@ public class StartWindowsController {
 
 		MazeGameController ven = loader.getController();
 		ven.setGame(game);
+		ven.setIsLoaded(true);
 		ven.disableButtons();
 		ven.createMaze();
+		ven.detectKeys(scene);
 		
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		stage.setScene(new Scene(root));
+		stage.setScene(scene);
 		stage.show();
 	}
 
@@ -103,6 +107,7 @@ public class StartWindowsController {
 		Game game = new Game();
 		MazeGameController ven = loader.getController();
 		ven.setGame(game);
+		ven.setIsLoaded(false);
 
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.setScene(new Scene(root));

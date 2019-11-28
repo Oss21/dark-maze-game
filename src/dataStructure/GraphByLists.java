@@ -215,7 +215,21 @@ public class GraphByLists<T extends Comparable<T>, E extends Comparable<E>> impl
 		int index = getIndexVertex(vertex);
 		return vertices.get(index).getEdges().size();
 	}
-
+	
+	/**
+	 * 
+	 */
+	@Override
+	public Vertex searchVertex(int index) {
+		Vertex toReturn = null;
+		
+		if (index < vertices.size()) {
+			toReturn = vertices.get(index);
+		}
+		
+		return toReturn;
+	}
+	
 	/**
 	 * The string representation of this graph.
 	 * 

@@ -29,9 +29,9 @@ public class Character implements Serializable{
 	 * @param position -  It is the path on which the character is located.
 	 * @param ilumination - Indicates if the flashlight is on or not.
 	 */
-	public Character(Vertex position, boolean ilumination) {
-		this.position = position;
-		this.ilumination = ilumination;
+	public Character() {
+		this.position = null;
+		this.ilumination = false;
 	}
 	
 	/**

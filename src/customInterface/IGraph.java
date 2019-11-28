@@ -3,6 +3,7 @@ package customInterface;
 import java.util.ArrayList;
 
 import dataStructure.Edge;
+import dataStructure.Vertex;
 
 /**
  * Interface that represents a graph.
@@ -71,4 +72,9 @@ public interface IGraph<T extends Comparable<T>, E extends Comparable<E>>  {
 	 * Returns the index of the vertex.
 	 */
 	int getIndexVertex(T valueVertex);
+	
+	/**
+	 * 
+	 */
+	Vertex searchVertex(int index);
 }

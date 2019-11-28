@@ -27,11 +27,6 @@ public class Game {
 	public static final int LIGHTING_LIMIT = 3;
 	
 	/**
-	 * Is the character. 
-	 */
-	private Character character;
-	
-	/**
 	 * It represents the maze to create.
 	 */
 	private Maze maze;
@@ -59,9 +54,13 @@ public class Game {
 	 */
 	public void genareteMaze(boolean isMatrix) throws IOException{
 		this.maze = new Maze(isMatrix);
-		this.maze.fillMatriz();
-		this.maze.createListAdyacent();
-		this.maze.createMatrixAdyacent();
+		this.maze.fillMatrix();
+		
+		if (isMatrix) {
+			this.maze.createMatrixAdyacent();
+		}else {
+			this.maze.createListAdyacent();
+		}
 	}
 
 	/**
@@ -100,32 +99,5 @@ public class Game {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	
-	/**
-	 * It is the area to illuminate.
-	 */
-	public List<Integer> areaToLight(){
-		List<Integer> area = new ArrayList<Integer>();
-		
-		Vertex vertex = character.getPosition();
-		ArrayList<Edge<?>> edges = vertex.getEdges();
-		
-		for (int i = 0; i < edges.size(); i++) {
-			//area.add(maze.getGraph().getIndexVertex((Path) edges.get(i).getDestination().getValue()));
-		    //area.add(maze.getGraph().getIndexVertex((Path) edges.get(i).getDestination().getValue()));
-		}
-		return area;
-	}
-	
-	/**
-	 * Illuminate the delimited area.
-	 */
-	public List<Integer> iluminateLargerArea() {
-		List<Integer> area = new ArrayList<Integer>();
-		
-		
-		return null;
 	}
 }

@@ -250,7 +250,21 @@ public class GraphByMatrix<T extends Comparable<T>, E extends Comparable<E>> imp
 	public void setVertices(ArrayList<Vertex<T>> vertices) {
 		this.vertices = vertices;
 	}
-
+	
+	/**
+	 * 
+	 */
+	@Override
+	public Vertex searchVertex(int index) {
+		Vertex toReturn = null;
+		
+		if (index < vertices.size()) {
+			toReturn = vertices.get(index);
+		}
+		
+		return toReturn;
+	}
+	
 	/**
 	 * Draw a graph with all connections Vertices-Edges. Including Directed and
 	 * Undirected edges between all vertices.

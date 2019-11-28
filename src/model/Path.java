@@ -21,13 +21,18 @@ public class Path implements Comparable<Path>, Serializable{
 	 * It is the type of the path.
 	 */
 	private PathType pathType;
+	
+	/**
+	 * 
+	 */
+	private String id;
 
 	/**
 	 * Create a path
 	 * @param value - It is the value of the path.
 	 * @param pathType - It is the type of the path.
 	 */
-	public Path (int value, PathType pathType) {
+	public Path (int value, PathType pathType, String id) {
 
 		this.value = value;
 		this.pathType = pathType;
@@ -69,9 +74,15 @@ public class Path implements Comparable<Path>, Serializable{
 	 */
 	@Override
 	public int compareTo(Path otherPath) {
-		return (int)(this.value-otherPath.getValue());
+		int value = 0;
+		
+		if (this.id.compareTo(otherPath.id) == 0) {
+			value = 0;
+		}else if (this.id.compareTo(otherPath.id) > 0) {
+			value = 1;
+		}else {
+			value = -1;
+		}
+		return value;
 	}
-
-
-
 }

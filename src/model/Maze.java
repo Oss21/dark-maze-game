@@ -15,9 +15,30 @@ import java.util.HashMap;
  * It is the class that represents the maze
  */
 public class Maze implements Serializable{
-
 	
-	public static final String PATH_LABERINTO_1="resourses/data/laberinto_1.csv"; 
+	
+	public static final String PATH_IDENTIFIER = "p";
+
+	public static final String WALL_IDENTIFIER = "w";
+
+	public static final String HOLE_IDENTIFIER = "h";
+
+	public static final String LAKE_IDENTIFIER = "l";
+
+	public static final String QUICKSAND_IDENTIFIER = "q";
+
+	public static final String WALL_MAZE_IDENTIFIER = "#";
+	
+	public static final String ENTRY_IDENTIFIER = "en";
+	
+	public static final String EXIT_IDENTIFIER = "ex";
+	
+	public static final String PATH_LABERINTO_1="resourses/data/laberinto_1.csv";
+	
+	/**
+	 * Is the character. 
+	 */
+	private Character character;
 	
 	/**
 	 * Represents the maze.
@@ -67,6 +88,7 @@ public class Maze implements Serializable{
 	 * @param isMatrix - Indicates the type of graph implementation.
 	 */
 	public Maze(boolean isMatrix) {
+		this.character = new Character();
 //		if (isMatrix) {
 //			this.graphByMatrix = new GraphByMatrix<String, Integer>(matriz.length);
 //		} else {
@@ -86,6 +108,7 @@ public class Maze implements Serializable{
 		return matriz;
 	}
 	
+	
 	/**
 	 * Number of steps
 	 * @return The number of steps in the maze.
@@ -94,6 +117,7 @@ public class Maze implements Serializable{
 		return numberOfSteps;
 	}
 
+	
 	/**
 	 * Check if the element in this position is a wall
 	 * @param x The x position of an origin vertex
@@ -167,7 +191,7 @@ public class Maze implements Serializable{
 			}
 		}
 	}
-		
+	
 	
 	/**
 	 * This method allows to create a Matrix.
@@ -198,9 +222,7 @@ public class Maze implements Serializable{
 		
 
 	}
-
-
-
+	
 
 	/**
 	 * This method checks if there are vertices around an origin vertex. 
@@ -239,10 +261,6 @@ public class Maze implements Serializable{
 		}
 		return result;
 	}
-	
-	
-	
-	
 	
 	
 	/**
@@ -292,20 +310,46 @@ public class Maze implements Serializable{
 	}
 	
 	
-	
-	
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public String[][] getAux_Matrix() {
 		return aux_Matrix;
 	}
-
-
-
+	
+	
+	/**
+	 * 
+	 * @param aux_Matrix
+	 */
 	public void setAux_Matrix(String[][] aux_Matrix) {
 		this.aux_Matrix = aux_Matrix;
 	}
 	
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public IGraph getGraph() {
+		IGraph graph = null;
+		
+		if (isMatrix) {
+			graph = graphByMatrix;
+		}else {
+			graph = graphByLists;
+		}
+		return graph;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Character getCharacter() {
+		return character;
+	}
 	
 }//FIN
 
