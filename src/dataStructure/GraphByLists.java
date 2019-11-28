@@ -2,8 +2,6 @@ package dataStructure;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Stack;
 
 import customInterface.IGraph;
 
@@ -12,7 +10,6 @@ import customInterface.IGraph;
  */
 public class GraphByLists<T extends Comparable<T>, E extends Comparable<E>> implements IGraph<T, E>, Serializable {
 
-	
 	/**
 	 * The adjacency list of the graph.
 	 */
@@ -48,7 +45,7 @@ public class GraphByLists<T extends Comparable<T>, E extends Comparable<E>> impl
 	public int getIndexVertex(T valueVertex) {
 		int index = -1;
 		for (int i=0;i<vertices.size();i++) {
-			if (vertices.get(i).getValue().equals(valueVertex))
+			if (vertices.get(i).getValue().compareTo(valueVertex) == 0)
 				index = i;
 		}
 		return index;
@@ -69,10 +66,8 @@ public class GraphByLists<T extends Comparable<T>, E extends Comparable<E>> impl
 		} else {
 			adjList.get(f).add(new Vertex<T>(destination));
 			adjList.get(d).add(new Vertex<T>(from));
-			vertices.get(f).getEdges()
-					.add(new Edge<E>(new Vertex<T>(from), new Vertex<T>(destination), cost, directed, value));
-			vertices.get(d).getEdges()
-					.add(new Edge<E>(new Vertex<T>(destination), new Vertex<T>(from), cost, directed, value));
+			vertices.get(f).getEdges().add(new Edge<E>(new Vertex<T>(from), new Vertex<T>(destination), cost, directed, value));
+			vertices.get(d).getEdges().add(new Edge<E>(new Vertex<T>(destination), new Vertex<T>(from), cost, directed, value));
 			edges.add(new Edge<E>(new Vertex<T>(from), new Vertex<T>(destination), cost, directed, value));
 		}
 	}
@@ -220,11 +215,16 @@ public class GraphByLists<T extends Comparable<T>, E extends Comparable<E>> impl
 	 * 
 	 */
 	@Override
-	public Vertex searchVertex(int index) {
-		Vertex toReturn = null;
+	public Vertex<T> searchVertex(T valueVertex) {
+		Vertex<T> toReturn = null;
+		boolean stop = false;
 		
-		if (index < vertices.size()) {
-			toReturn = vertices.get(index);
+		for (int i = 0; i < vertices.size() && !stop; i++) {
+			
+			if (vertices.get(i).getValue().compareTo(valueVertex) == 0) {
+				toReturn = vertices.get(i);
+				stop = true;
+			}
 		}
 		
 		return toReturn;

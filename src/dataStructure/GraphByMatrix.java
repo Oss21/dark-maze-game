@@ -16,7 +16,7 @@ public class GraphByMatrix<T extends Comparable<T>, E extends Comparable<E>> imp
 	private ArrayList<Edge<E>>[][] adjMatrix;
 
 	/**
-	 * It is the verteces list.
+	 * It is the vertexes list.
 	 */
 	private ArrayList<Vertex<T>> vertices;
 	
@@ -255,11 +255,15 @@ public class GraphByMatrix<T extends Comparable<T>, E extends Comparable<E>> imp
 	 * 
 	 */
 	@Override
-	public Vertex searchVertex(int index) {
-		Vertex toReturn = null;
+	public Vertex<T> searchVertex(T valueVertex) {
+		Vertex<T> toReturn = null;
+		boolean stop = false;
 		
-		if (index < vertices.size()) {
-			toReturn = vertices.get(index);
+		for (int i = 0; i < vertices.size() && !stop; i++) {
+			if (valueVertex.compareTo(vertices.get(i).getValue()) == 0) {
+				toReturn = vertices.get(i);
+				stop = true;
+			}
 		}
 		
 		return toReturn;

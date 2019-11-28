@@ -76,5 +76,5 @@ public interface IGraph<T extends Comparable<T>, E extends Comparable<E>>  {
 	/**
 	 * 
 	 */
-	Vertex searchVertex(int index);
+	Vertex<T> searchVertex(T valueVertex);
 }
