@@ -406,13 +406,13 @@ public class MazeGameController {
 					this.paths[i][j] = iView;
 					break;
 					
-				case "en":
+				case Maze.ENTRY_IDENTIFIER:
 					iView.setImage(path);
 					this.paths[i][j] = iView;
 					printPlayerOnMaze(i,j, iView);
 					break;
 					
-				case "ex":
+				case Maze.EXIT_IDENTIFIER:
 					iView.setImage(path);
 					this.paths[i][j] = iView;
 				}

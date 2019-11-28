@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import org.junit.jupiter.params.shadow.com.univocity.parsers.conversions.NumericConversion;
+
 /**
  * It is the class that represents the maze
  */
@@ -43,7 +45,7 @@ public class Maze implements Serializable{
 	/**
 	 * Represents the maze.
 	 */
-	public String [][] matriz;
+	public String [][] matrix;
 	
 	/**
 	 * Represents the graph when adjacency list is used.
@@ -73,7 +75,7 @@ public class Maze implements Serializable{
 	/**
 	 * Indicate how many steps are in the maze in the other words how many vertices are there.
 	 */
-	private int numberOfSteps = 1;
+	private int numberOfSteps;
 	
 	/**
 	 * Represents the cost of the road
@@ -89,6 +91,7 @@ public class Maze implements Serializable{
 	 */
 	public Maze(boolean isMatrix) {
 		this.character = new Character();
+		this.numberOfSteps = 0;
 //		if (isMatrix) {
 //			this.graphByMatrix = new GraphByMatrix<String, Integer>(matriz.length);
 //		} else {
@@ -105,7 +108,7 @@ public class Maze implements Serializable{
 	 * Returns the adjacency matrix.
 	 */
 	public String[][] getMatriz() {
-		return matriz;
+		return matrix;
 	}
 	
 	
@@ -134,31 +137,40 @@ public class Maze implements Serializable{
 	 * file that contains the dimensions of the matrix and its template.
 	 * @throws IOException If the file path is not found
 	 */
-	public void fillMatriz() throws IOException {
+	public void fillMatrix() throws IOException {
 		File file = new File(PATH_LABERINTO_1);
 		FileReader fr = new FileReader(file);
-		BufferedReader lector = new BufferedReader(fr);
-		String line = lector.readLine();
+		BufferedReader br = new BufferedReader(fr);
 		
-		String [] dimensiones  = line.split(";");
-		int row = Integer.parseInt(dimensiones[0]);
-		int column = Integer.parseInt(dimensiones[1]);
-		aux_Matrix = new String[row][column]; 
-		matriz = new String[row][column];
-		line = lector.readLine();
+		String line = br.readLine();
 		int i = 0;
+		
 		while(line != null) {
-			String[] elements = line.split(";");
-			for (int j = 0; j < matriz[i].length; j++) {
-				aux_Matrix[i][j] = elements[j];
-				matriz[i][j] = elements[j];
+			String[] content = line.split(";");
+			numberOfSteps++;
+			
+			if (i == 0) {
+				int m = Integer.parseInt(content[0]);
+				int n = Integer.parseInt(content[1]);
 				
+				this.matrix = new  String[m][n];
+				this.aux_Matrix = new String[m][n];
+				
+			}else {
+				for (int j = 0; j < content.length; j++) {
+					matrix[i-1][j] = content[j];
+					
+					if (content[j].equals("#")) {
+						aux_Matrix[i-1][j] = content[j];
+					}else {
+						aux_Matrix[i-1][j] = "" + numberOfSteps;
+					}
+				}
 			}
-			i++;
-			line = lector.readLine();
-		}
-	
-		lector.close();
+			 i++;
+			 line = br.readLine();
+		 }
+		br.close();
 		fr.close();
 	}
 	
@@ -183,7 +195,7 @@ public class Maze implements Serializable{
 				String[] value = finAdjacent(i,j).split(",");
 				int k = 0;	
 				while (k < value.length) {
-					if(!matriz[i][j].equals("#") && !value[k].equals("NO")) {
+					if(!matrix[i][j].equals("#") && !value[k].equals("NO")) {
 						graphByLists.addEdge(aux_Matrix[i][j], value[k], GraphByLists.NOT_DIRECTED, COST,COST);
 					}
 					k++;
@@ -212,7 +224,7 @@ public class Maze implements Serializable{
 				String[] value = finAdjacent(i,j).split(",");
 				int k = 0;	
 				while (k < value.length) {
-					if(!matriz[i][j].equals("#") && !value[k].equals("NO")) {
+					if(!matrix[i][j].equals("#") && !value[k].equals("NO")) {
 						graphByMatrix.addEdge(aux_Matrix[i][j], value[k],GraphByMatrix.NOT_DIRECTED, COST, COST);
 					}
 					k++;
