@@ -262,6 +262,7 @@ public class Maze implements Serializable{
 				}
 			}
 		}
+		
 		createEdges(graphByLists);
 	}
 	
