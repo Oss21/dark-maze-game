@@ -7,12 +7,11 @@ import org.junit.jupiter.api.Test;
 import model.Path;
 import model.Path.PathType;
 
-class VertexTest {
+class EdgeTest {
 
 	private Path p1;
 	private Path p2;
 	Edge<Double> e ;
-	Vertex<?> vertex ;
 	
 	private void setupEscenary1() {
 		
