@@ -5,7 +5,10 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import model.Game;
 import javafx.scene.Node;
@@ -55,7 +58,6 @@ public class StartWindowsController {
 	 */
 	@FXML
 	void loadGameClicked(ActionEvent event) {
-
 		Game game = new Game();
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/userInterface/MazeGameGUI.fxml"));
@@ -68,19 +70,26 @@ public class StartWindowsController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		game.loadGame();
-
-		MazeGameController ven = loader.getController();
-		ven.setGame(game);
-		ven.setIsLoaded(true);
-		ven.disableButtons();
-		ven.createMaze();
-		ven.detectKeys(scene);
 		
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		stage.setScene(scene);
-		stage.show();
+		try {
+			game.loadGame();
+			
+			MazeGameController ven = loader.getController();
+			ven.setGame(game);
+			ven.setIsLoaded(true);
+			ven.disableCreateButtons(true);
+			ven.paintMaze();
+			ven.detectKeys(scene);
+			
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			stage.setScene(scene);
+			stage.show();
+			
+		}catch (ClassNotFoundException | NullPointerException |  IOException e) {
+			Alert alert = new Alert(AlertType.ERROR, "No se encuestra su progreso en la partida", ButtonType.CLOSE);
+			alert.setHeaderText("Se ha borrado o alterado el archivo donde se encontraba su progreso en la partida");
+			alert.show();
+		}
 	}
 
 	/**
@@ -101,6 +110,7 @@ public class StartWindowsController {
 		MazeGameController ven = loader.getController();
 		ven.setGame(game);
 		ven.setIsLoaded(false);
+		ven.disableFunctionButtons(true);
 
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.setScene(new Scene(root));

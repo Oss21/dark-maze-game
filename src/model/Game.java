@@ -9,10 +9,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import org.ietf.jgss.Oid;
 
+import customInterface.IGraph;
 import dataStructure.Edge;
+import dataStructure.GraphByLists;
+import dataStructure.GraphByMatrix;
 import dataStructure.Vertex;
 import javafx.scene.media.VideoTrack;
 
@@ -66,38 +70,72 @@ public class Game {
 	/**
 	 * Load the game state.
 	 */
-	public void loadGame(){
-		try {
-			File file = new File("resourses/serialization/serialization.dat");
-			if (file.exists()) {
-				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-				maze = (Maze) ois.readObject();
-				ois.close();
-			} else {
-				file.createNewFile();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}catch (ClassNotFoundException e) {
-				e.printStackTrace();
+	public void loadGame() throws IOException, ClassNotFoundException, NullPointerException{
+		ObjectInputStream ois = null;
+		File file = new File("resourses/serialization/serialization.dat");
+		if (!file.exists()) {
+			file.createNewFile();
+		} else {
+			ois = new ObjectInputStream(new FileInputStream(file));
+			maze = (Maze) ois.readObject();
 		}
+		ois.close();
 	}
 	
 	
 	/**
 	 * Save the game state.
 	 */
-	public void saveGame() {
+	public void saveGame() throws IOException{
 		File file = new File("resourses/serialization/serialization.dat");
 		if (file.exists()) {
 			file.delete();
 		}
-		try {
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-			oos.writeObject(maze);
-			oos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+		oos.writeObject(maze);
+		oos.close();
+	}
+	
+	
+	/**
+	 * 
+	 */
+	private List<Vertex<Path>> iluminateAdjacentsPaths(Vertex<Path> vertex) {
+		IGraph<Path, Double> graph = this.maze.getGraph();
+		List<Vertex<Path>> list = null;
+		
+		if (graph instanceof GraphByLists) {
+			list= this.maze.getMethodsGraphs().BFS((GraphByLists<Path, Double>) graph, vertex);
+			
+		}else if (graph instanceof GraphByMatrix) {
+			list= this.maze.getMethodsGraphs().BFS((GraphByMatrix<Path, Double>) graph, vertex);
 		}
+		return list;
+	}
+	
+	
+	/**
+	 * 
+	 */
+	public Stack<String> searchAdjacentsPaths(int i, int j) {
+    	List<Vertex<Path>> list = iluminateAdjacentsPaths(this.maze.getCharacter().getPosition());
+    	
+    	Stack<String> stack = new Stack<String>();
+    	
+    	int size = this.maze.countAdjacents(i, j);
+    	
+    	int k = 0;
+    	while(k < size) {
+    		
+    		if (!stack.contains(list.get(k).getValue().getId())) {
+    			stack.add(list.get(k).getValue().getId());
+				k++;
+				
+			}else {
+				size++;
+				k++;
+			}
+    	}
+    	return stack;
 	}
 }

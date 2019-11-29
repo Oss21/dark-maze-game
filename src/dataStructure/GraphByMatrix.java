@@ -295,6 +295,7 @@ public class GraphByMatrix<T extends Comparable<T>, E extends Comparable<E>> imp
 		return g;
 	}
 
+	
 	/**
 	 * Returns the edges list.
 	 */

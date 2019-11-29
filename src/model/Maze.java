@@ -3,6 +3,7 @@ package model;
 import customInterface.IGraph;
 import dataStructure.GraphByLists;
 import dataStructure.GraphByMatrix;
+import dataStructure.MethodsGraphs;
 import model.Path.PathType;
 
 import java.io.BufferedReader;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 public class Maze implements Serializable{
 	
 	
-	public static final String PATH_IDENTIFIER = "-";
+	public static final String PATH_IDENTIFIER = "p";
 
 	public static final String WALL_IDENTIFIER = "w";
 
@@ -39,6 +40,21 @@ public class Maze implements Serializable{
 	public static final String PATH_LABERINTO_1="resourses/data/laberinto_1.csv";
 	
 	/**
+	 * Represents the graph when adjacency list is used.
+	 */
+	private GraphByLists<Path, Double> graphByLists;
+	
+	/**
+	 * Represents the graph when used with adjacency matrix.
+	 */
+	private GraphByMatrix<Path, Double> graphByMatrix;
+	
+	/**
+	 * 
+	 */
+	private MethodsGraphs<Path, Double> methodsGraphs;
+	
+	/**
 	 * Is the character. 
 	 */
 	private Character character;
@@ -52,16 +68,6 @@ public class Maze implements Serializable{
 	 * Represents the graph when adjacency list is used.
 	 */
 	private String [][] aux_Matrix;
-	
-	/**
-	 * Represents the graph when adjacency list is used.
-	 */
-	private GraphByLists<Path, Double> graphByLists;
-	
-	/**
-	 * Represents the graph when used with adjacency matrix.
-	 */
-	private GraphByMatrix<Path, Double> graphByMatrix;
 	
 	/**
 	 * 
@@ -113,7 +119,15 @@ public class Maze implements Serializable{
 	public int getNumberOfSteps() {
 		return numberOfSteps;
 	}
-
+	
+	
+	/**
+	 * 
+	 */
+	public MethodsGraphs<Path, Double> getMethodsGraphs(){
+		return this.methodsGraphs;
+	}
+	
 	
 	/**
 	 * This method fill the matrix according to the read
@@ -142,7 +156,7 @@ public class Maze implements Serializable{
 				for (int j = 0; j < content.length; j++) {
 					matrix[i-1][j] = content[j];
 					
-					if (content[j].equals("#")) {
+					if (content[j].equals(WALL_MAZE_IDENTIFIER)) {
 						aux_Matrix[i-1][j] = content[j];
 					}else {
 						aux_Matrix[i-1][j] = "" + numberOfSteps;
@@ -250,6 +264,7 @@ public class Maze implements Serializable{
 	 */
 	public void createListAdyacent() {
 		this.graphByLists = new GraphByLists<Path, Double>(numberOfSteps);
+		this.methodsGraphs = new MethodsGraphs<>();
 		
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[i].length; j++) {
@@ -273,6 +288,7 @@ public class Maze implements Serializable{
 	 */
 	public void createMatrixAdyacent() {
 		this.graphByMatrix = new GraphByMatrix<Path, Double>(numberOfSteps);
+		this.methodsGraphs = new MethodsGraphs<>();
 		
 		for (int i = 0; i < aux_Matrix.length; i++) {
 			for (int j = 0; j < aux_Matrix[i].length; j++) {
@@ -314,7 +330,22 @@ public class Maze implements Serializable{
 		}
 	}
 	
-
+	
+    /**
+     * 
+     */
+    public int countAdjacents(int i, int j) {
+		int n = 0;
+		String[] adjacents = findAdjacent(i, j).split(";");
+		
+		for (int k = 0; k < adjacents.length; k++) {
+			if (!adjacents[k].equals("")) {
+				n++;
+			}
+		}
+		return n;
+    }
+	
 	/**
 	 * This method checks if there are vertices around an origin vertex. 
 	 * @param i The x position of an origin vertex

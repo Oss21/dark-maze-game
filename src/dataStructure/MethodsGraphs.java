@@ -63,8 +63,7 @@ public class MethodsGraphs<T extends Comparable<T>, E extends Comparable<E>> imp
 	 * 
 	 * @param g The graph which the method will do the DFS Algorithm
 	 * @param v The vertex which the method will start the DFS algorithm
-	 * @return Returns an arraylist in order how the method has done the DFS
-	 *         algorithm.
+	 * @return Returns an arraylist in order how the method has done the DFS algorithm.
 	 */
 	public ArrayList<Vertex<T>> DFS(GraphByMatrix<T, E> g, Vertex<T> v) {
 		boolean[] visited = new boolean[g.getVertices().size()];

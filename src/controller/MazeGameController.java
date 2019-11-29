@@ -7,10 +7,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Stack;
 
 import dataStructure.Vertex;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,9 +24,13 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import model.Character;
 import model.Game;
@@ -69,6 +76,11 @@ public class MazeGameController {
 	 * It is the image path of Sam
 	 */
 	private static final String SAM_IMAGE_URL = "/img/Sam.gif";
+	
+	/**
+	 * 
+	 */
+	private static final String DARKNESS_IMAGE_URL = "/img/oscuro.jpg";
 	
 	/**
 	 * It is the matrix button
@@ -129,6 +141,11 @@ public class MazeGameController {
 	 * Image representing the playable character of the maze
 	 */
 	private Image sam;
+	
+	/**
+	 * 
+	 */
+	private Image darkness;
 	
     /**
      * It is the matrix button
@@ -196,6 +213,7 @@ public class MazeGameController {
     	quickSand = new Image(QUICKSAND_IMAGE_URL);
     	wallMaze = new Image(WALL_MAZE_IMAGE_URL);
     	sam = new Image(SAM_IMAGE_URL);
+    	darkness = new Image(DARKNESS_IMAGE_URL);
     }
     
     
@@ -220,9 +238,20 @@ public class MazeGameController {
     /**
      * Disable the create graph buttons
      */
-    public void disableButtons() {
-    	this.btList.setDisable(true);
-    	this.btMatriz.setDisable(true);
+    public void disableCreateButtons(boolean disable) {
+    	this.btList.setDisable(disable);
+    	this.btMatriz.setDisable(disable);
+    }
+    
+    
+    /**
+     * 
+     */
+    public void disableFunctionButtons(boolean disable) {
+    	this.btGiveSolution.setDisable(disable);
+    	this.btGoToPointLight.setDisable(disable);
+    	this.btUseFlashlight.setDisable(disable);
+    	this.btSaveGame.setDisable(disable);
     }
     
     
@@ -275,7 +304,7 @@ public class MazeGameController {
   	 */
     @FXML
     void giveSolutionClicked(ActionEvent event) {
-    	
+    	paintEntireMaze();
     }
 
     
@@ -289,8 +318,13 @@ public class MazeGameController {
     		Scene scene = (Scene) ((Node) event.getSource()).getScene().getWindow().getScene();
     		
 			game.genareteMaze(false);
-	    	createMaze();
+	    	paintMaze();
+	    	paintDarkMaze();
 	    	detectKeys(scene);
+	    	
+	    	btList.setDisable(true);
+	    	btMatriz.setDisable(true);
+	    	disableCreateButtons(false);
 			
 		} catch (IOException e) {
 			Alert alert = new Alert(AlertType.ERROR, "Se ha borrado o alterado el documento donde se tienen los datos del programa", ButtonType.CLOSE);
@@ -309,8 +343,12 @@ public class MazeGameController {
 			Scene scene = (Scene) ((Node) event.getSource()).getScene().getWindow().getScene();
 			
 			game.genareteMaze(true);
-			createMaze();
+			paintMaze();
 			detectKeys(scene);
+			
+			btMatriz.setDisable(true);
+			btList.setDisable(true);
+			disableFunctionButtons(false);
 			
 		} catch (IOException e) {
 			Alert alert = new Alert(AlertType.ERROR, "Se ha borrado o alterado el documento donde se tienen los datos del programa", ButtonType.CLOSE);
@@ -334,8 +372,13 @@ public class MazeGameController {
 	 */
     @FXML
     void saveGameClicked(ActionEvent event) {
-    	game.saveGame();
-    	btSaveGame.setDisable(true);
+    	try {
+			game.saveGame();
+			btSaveGame.setDisable(true);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     
@@ -351,92 +394,170 @@ public class MazeGameController {
     /**
      * Method that paints the screen maze
      */
-    public void createMaze() {
-    	this.maze =  this.game.getMaze().getMatriz();
-    	this.vertexID = this.game.getMaze().getAux_Matrix();
-    	this.paths = new ImageView[maze.length][maze[0].length];
-    	
-    	this.grid = new GridPane();
+    public void paintEntireMaze() {
     	
     	for (int i = 0; i < maze.length; i++) {
 			for (int j = 0; j < maze[i].length; j++) {
 				
-				ImageView iView = new ImageView();
-				iView.setFitWidth(50);
-				iView.setPreserveRatio(true);
-				
-				if (!maze[i][j].equals(Maze.WALL_MAZE_IDENTIFIER)) {
-					iView.setId(vertexID[i][j]);
-
-				}else {
-					iView.setId(Maze.WALL_MAZE_IDENTIFIER);
-				}
-				
 				switch (maze[i][j]) {
-				case "-":
-					iView.setImage(path);
-					this.paths[i][j] = iView;
-					break;
-					
-//				case Maze.PATH_IDENTIFIER:
-//					iView.setImage(path);
-//					this.paths[i][j] = iView;
-//					break;
-					
-				case Maze.WALL_IDENTIFIER:
-					iView.setImage(wall);
-					this.paths[i][j] = iView;
-					break;
-					
-				case Maze.HOLE_IDENTIFIER:
-					iView.setImage(hole);
-					this.paths[i][j] = iView;
-					break;
-					
-				case Maze.LAKE_IDENTIFIER:
-					iView.setImage(lake);
-					this.paths[i][j] = iView;
-					break;
-					
-				case Maze.QUICKSAND_IDENTIFIER:
-					iView.setImage(quickSand);
-					this.paths[i][j] = iView;
-					break;
-					
-				case Maze.POINTLIGHT_IDENTIFIER:
-					iView.setImage(path);
-					this.paths[i][j] = iView;
-					break;
-					
-				case Maze.WALL_MAZE_IDENTIFIER:
-					iView.setImage(wallMaze);
-					this.paths[i][j] = iView;
-					break;
-					
-				case Maze.ENTRY_IDENTIFIER:
-					iView.setImage(path);
-					this.paths[i][j] = iView;
-					if (!isLoaded) {
-						printPlayerOnMaze(i,j, iView);
+						
+					case Maze.PATH_IDENTIFIER:
+						paths[i][j].setImage(path);
+						break;
+						
+					case Maze.WALL_IDENTIFIER:
+						paths[i][j].setImage(wall);
+						break;
+						
+					case Maze.HOLE_IDENTIFIER:
+						paths[i][j].setImage(hole);
+						break;
+						
+					case Maze.LAKE_IDENTIFIER:
+						paths[i][j].setImage(lake);
+						break;
+						
+					case Maze.QUICKSAND_IDENTIFIER:
+						paths[i][j].setImage(quickSand);
+						break;
+						
+					case Maze.POINTLIGHT_IDENTIFIER:
+						paths[i][j].setImage(path);
+						break;
+						
+					case Maze.WALL_MAZE_IDENTIFIER:
+						paths[i][j].setImage(wallMaze);
+						break;
+						
+					case Maze.ENTRY_IDENTIFIER:
+						paths[i][j].setImage(path);
+						break;
+						
+					case Maze.EXIT_IDENTIFIER:
+						paths[i][j].setImage(path);
 					}
-					break;
-					
-				case Maze.EXIT_IDENTIFIER:
-					iView.setImage(path);
-					this.paths[i][j] = iView;
-				}
-				this.grid.add(iView, j, i);
 			}
 		}
-    	if (isLoaded) {
-			printPlayerOnMaze();
-		}
-    	spMaze.setContent(grid);
+    	printPlayerOnMaze();
     }
+    
     
     /**
      * 
      */
+    public void paintMaze() {
+    	if (this.game.getMaze().getMatriz() == null || this.game.getMaze().getAux_Matrix() == null) {
+			throw new NullPointerException();
+			
+		} else {
+			
+			this.maze =  this.game.getMaze().getMatriz();
+	    	this.vertexID = this.game.getMaze().getAux_Matrix();
+	    	this.paths = new ImageView[maze.length][maze[0].length];
+	    	
+	    	this.grid = new GridPane();
+	    	grid.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+	    	
+	    	for (int i = 0; i < maze.length; i++) {
+				for (int j = 0; j < maze[i].length; j++) {
+					
+					ImageView iView = new ImageView();
+					iView.setFitWidth(50);
+					iView.setPreserveRatio(true);
+					
+					if (!maze[i][j].equals(Maze.WALL_MAZE_IDENTIFIER)) {
+						iView.setId(vertexID[i][j]);
+
+					}else {
+						iView.setId(Maze.WALL_MAZE_IDENTIFIER);
+					}
+					
+					if (!isLoaded && maze[i][j].equals(Maze.ENTRY_IDENTIFIER)) {
+						printPlayerOnMaze(i, j, iView);
+					}
+					
+					grid.add(iView, j, i);
+					this.paths[i][j] = iView;
+				}
+	    	}
+	    	paintDarkMaze();
+	    	if (isLoaded) {
+				printPlayerOnMaze();
+			}
+	    	spMaze.setContent(grid);
+			
+		}
+    }
+    	
+    
+    
+    /**
+     * 
+     */
+    private void paintDarkMaze() {
+    	
+    	for (int i = 0; i < maze.length; i++) {
+    		for (int j = 0; j < maze[0].length; j++) {
+    			this.paths[i][j].setImage(darkness);
+			}
+    	}	
+    }
+    
+    
+    /**
+     * 
+     * @param i
+     * @param j
+     */
+    private void printPath(int i, int j) {
+    	
+    	switch (maze[i][j]) {
+				
+			case Maze.PATH_IDENTIFIER:
+				paths[i][j].setImage(path);
+				break;
+				
+			case Maze.WALL_IDENTIFIER:
+				paths[i][j].setImage(wall);
+				break;
+				
+			case Maze.HOLE_IDENTIFIER:
+				paths[i][j].setImage(hole);
+				break;
+				
+			case Maze.LAKE_IDENTIFIER:
+				paths[i][j].setImage(lake);
+				break;
+				
+			case Maze.QUICKSAND_IDENTIFIER:
+				paths[i][j].setImage(quickSand);
+				break;
+				
+			case Maze.POINTLIGHT_IDENTIFIER:
+				paths[i][j].setImage(path);
+				break;
+				
+			case Maze.WALL_MAZE_IDENTIFIER:
+				paths[i][j].setImage(wallMaze);
+				break;
+				
+			case Maze.ENTRY_IDENTIFIER:
+				paths[i][j].setImage(path);
+				break;
+				
+			case Maze.EXIT_IDENTIFIER:
+				paths[i][j].setImage(path);
+				break;
+		}
+    }
+    
+    
+   /**
+    * 
+    * @param i
+    * @param j
+    * @param imageView
+    */
     private void printPlayerOnMaze(int i, int j, ImageView imageView) {
     	Character character = this.game.getMaze().getCharacter();
 
@@ -521,6 +642,9 @@ public class MazeGameController {
     	
     	if ((c[0] - 1) >= 0) {
     		if (!paths[c[0]-1][c[1]].getId().equals(Maze.WALL_MAZE_IDENTIFIER)) {
+    			paintDarkMaze();
+    			printAdjacentsPaths(c[0]+1, c[1]);
+    			
         		paths[c[0]-1][c[1]].setImage(sam);
         		paths[c[0]-1][c[1]].setRotate(270);
         		character.setPosition(this.game.getMaze().getGraph().searchVertex(this.game.getMaze().searchPath(paths[c[0]-1][c[1]].getId())));
@@ -540,6 +664,10 @@ public class MazeGameController {
     	
     	if ((c[0] + 1) <= maze.length - 1) {
     		if (!paths[c[0]+1][c[1]].getId().equals(Maze.WALL_MAZE_IDENTIFIER)) {
+    			paintDarkMaze();
+    			printAdjacentsPaths(c[0]+1, c[1]);
+    			
+    			
     			paths[c[0]+1][c[1]].setImage(sam);
     			paths[c[0]+1][c[1]].setRotate(90);
     			this.game.getMaze().getCharacter().setPosition(this.game.getMaze().getGraph().searchVertex(this.game.getMaze().searchPath(paths[c[0]+1][c[1]].getId())));
@@ -559,6 +687,9 @@ public class MazeGameController {
     	
     	if ((c[1] + 1) <= maze[0].length - 1) {
     		if (!paths[c[0]][c[1]+1].getId().equals(Maze.WALL_MAZE_IDENTIFIER)) {
+    			paintDarkMaze();
+    			printAdjacentsPaths(c[0]+1, c[1]);
+    			
     			paths[c[0]][c[1]+1].setImage(sam);
     			paths[c[0]][c[1]+1].setRotate(0);
     			this.game.getMaze().getCharacter().setPosition(this.game.getMaze().getGraph().searchVertex(this.game.getMaze().searchPath(paths[c[0]][c[1]+1].getId())));
@@ -578,11 +709,38 @@ public class MazeGameController {
     	
     	if ((c[1] - 1) >= 0) {
     		if (!paths[c[0]][c[1]-1].getId().equals(Maze.WALL_MAZE_IDENTIFIER)) {
+    			paintDarkMaze();
+    			printAdjacentsPaths(c[0]+1, c[1]);
+    			
     			paths[c[0]][c[1]-1].setImage(sam);
     			paths[c[0]][c[1]-1].setRotate(180);
     			this.game.getMaze().getCharacter().setPosition(this.game.getMaze().getGraph().searchVertex(this.game.getMaze().searchPath(paths[c[0]][c[1]-1].getId())));
 			}
 		}
+    }
+    
+    
+    /**
+     * 
+     * @param i
+     * @param j
+     */
+    private void printAdjacentsPaths(int i, int j) {
+		Stack<String> adjacents = this.game.searchAdjacentsPaths(i, j);
+    	
+		int k = 0;
+		while(k < adjacents.size()) {
+			int[] c = getCoordenate(Integer.parseInt(adjacents.pop()));
+			printPath(c[0], c[1]);
+		}
+    }
+    
+    
+    /**
+     * 
+     */
+    private void printAdjacentsWalls(int i, int j) {
+    	
     }
     
 }
