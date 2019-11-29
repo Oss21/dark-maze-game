@@ -334,7 +334,11 @@ public class MazeGameController {
 	 */
     @FXML
     void saveGameClicked(ActionEvent event) {
-    	game.saveGame();
+    	try {
+			game.saveGame();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     	btSaveGame.setDisable(true);
     }
 
@@ -351,88 +355,93 @@ public class MazeGameController {
     /**
      * Method that paints the screen maze
      */
-    public void createMaze() {
-    	this.maze =  this.game.getMaze().getMatriz();
-    	this.vertexID = this.game.getMaze().getAux_Matrix();
-    	this.paths = new ImageView[maze.length][maze[0].length];
-    	
-    	this.grid = new GridPane();
-    	
-    	for (int i = 0; i < maze.length; i++) {
-			for (int j = 0; j < maze[i].length; j++) {
-				
-				ImageView iView = new ImageView();
-				iView.setFitWidth(50);
-				iView.setPreserveRatio(true);
-				
-				if (!maze[i][j].equals(Maze.WALL_MAZE_IDENTIFIER)) {
-					iView.setId(vertexID[i][j]);
+	public void createMaze() throws NullPointerException {
+		if (this.game.getMaze().getMatriz() == null || this.game.getMaze().getAux_Matrix() == null) {
+			throw new NullPointerException();
+		} else {
+			this.maze = this.game.getMaze().getMatriz();
+			this.vertexID = this.game.getMaze().getAux_Matrix();
 
-				}else {
-					iView.setId(Maze.WALL_MAZE_IDENTIFIER);
-				}
-				
-				switch (maze[i][j]) {
-				case "-":
-					iView.setImage(path);
-					this.paths[i][j] = iView;
-					break;
-					
+			this.paths = new ImageView[maze.length][maze[0].length];
+
+			this.grid = new GridPane();
+
+			for (int i = 0; i < maze.length; i++) {
+				for (int j = 0; j < maze[i].length; j++) {
+
+					ImageView iView = new ImageView();
+					iView.setFitWidth(50);
+					iView.setPreserveRatio(true);
+
+					if (!maze[i][j].equals(Maze.WALL_MAZE_IDENTIFIER)) {
+						iView.setId(vertexID[i][j]);
+
+					} else {
+						iView.setId(Maze.WALL_MAZE_IDENTIFIER);
+					}
+
+					switch (maze[i][j]) {
+					case "-":
+						iView.setImage(path);
+						this.paths[i][j] = iView;
+						break;
+
 //				case Maze.PATH_IDENTIFIER:
 //					iView.setImage(path);
 //					this.paths[i][j] = iView;
 //					break;
-					
-				case Maze.WALL_IDENTIFIER:
-					iView.setImage(wall);
-					this.paths[i][j] = iView;
-					break;
-					
-				case Maze.HOLE_IDENTIFIER:
-					iView.setImage(hole);
-					this.paths[i][j] = iView;
-					break;
-					
-				case Maze.LAKE_IDENTIFIER:
-					iView.setImage(lake);
-					this.paths[i][j] = iView;
-					break;
-					
-				case Maze.QUICKSAND_IDENTIFIER:
-					iView.setImage(quickSand);
-					this.paths[i][j] = iView;
-					break;
-					
-				case Maze.POINTLIGHT_IDENTIFIER:
-					iView.setImage(path);
-					this.paths[i][j] = iView;
-					break;
-					
-				case Maze.WALL_MAZE_IDENTIFIER:
-					iView.setImage(wallMaze);
-					this.paths[i][j] = iView;
-					break;
-					
-				case Maze.ENTRY_IDENTIFIER:
-					iView.setImage(path);
-					this.paths[i][j] = iView;
-					if (!isLoaded) {
-						printPlayerOnMaze(i,j, iView);
+
+					case Maze.WALL_IDENTIFIER:
+						iView.setImage(wall);
+						this.paths[i][j] = iView;
+						break;
+
+					case Maze.HOLE_IDENTIFIER:
+						iView.setImage(hole);
+						this.paths[i][j] = iView;
+						break;
+
+					case Maze.LAKE_IDENTIFIER:
+						iView.setImage(lake);
+						this.paths[i][j] = iView;
+						break;
+
+					case Maze.QUICKSAND_IDENTIFIER:
+						iView.setImage(quickSand);
+						this.paths[i][j] = iView;
+						break;
+
+					case Maze.POINTLIGHT_IDENTIFIER:
+						iView.setImage(path);
+						this.paths[i][j] = iView;
+						break;
+
+					case Maze.WALL_MAZE_IDENTIFIER:
+						iView.setImage(wallMaze);
+						this.paths[i][j] = iView;
+						break;
+
+					case Maze.ENTRY_IDENTIFIER:
+						iView.setImage(path);
+						this.paths[i][j] = iView;
+						if (!isLoaded) {
+							printPlayerOnMaze(i, j, iView);
+						}
+						break;
+
+					case Maze.EXIT_IDENTIFIER:
+						iView.setImage(path);
+						this.paths[i][j] = iView;
 					}
-					break;
-					
-				case Maze.EXIT_IDENTIFIER:
-					iView.setImage(path);
-					this.paths[i][j] = iView;
+					this.grid.add(iView, j, i);
 				}
-				this.grid.add(iView, j, i);
 			}
+			if (isLoaded) {
+				printPlayerOnMaze();
+			}
+			spMaze.setContent(grid);
 		}
-    	if (isLoaded) {
-			printPlayerOnMaze();
-		}
-    	spMaze.setContent(grid);
-    }
+	}
     
     /**
      * 

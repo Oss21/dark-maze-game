@@ -63,41 +63,36 @@ public class Game {
 		}
 	}
 
+
 	/**
 	 * Load the game state.
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void loadGame(){
-		try {
-			File file = new File("resourses/serialization/serialization.dat");
-			if (file.exists()) {
-				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-				maze = (Maze) ois.readObject();
-				ois.close();
-			} else {
-				file.createNewFile();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}catch (ClassNotFoundException e) {
-				e.printStackTrace();
+	public void loadGame() throws IOException, ClassNotFoundException, NullPointerException {
+		ObjectInputStream ois = null;
+		File file = new File("resourses/serialization/serialization.dat");
+		if (!file.exists()) {
+			file.createNewFile();
+		} else {
+			ois = new ObjectInputStream(new FileInputStream(file));
+			maze = (Maze) ois.readObject();
 		}
+		ois.close();
 	}
 	
 	
 	/**
 	 * Save the game state.
+	 * @throws IOException 
 	 */
-	public void saveGame() {
+	public void saveGame() throws IOException {
 		File file = new File("resourses/serialization/serialization.dat");
 		if (file.exists()) {
 			file.delete();
 		}
-		try {
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-			oos.writeObject(maze);
-			oos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+		oos.writeObject(maze);
+		oos.close();
 	}
 }
