@@ -67,10 +67,17 @@ public class Game {
 		}
 	}
 
+
 	/**
 	 * Load the game state.
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
+<<<<<<< HEAD
 	public void loadGame() throws IOException, ClassNotFoundException, NullPointerException{
+=======
+	public void loadGame() throws IOException, ClassNotFoundException, NullPointerException {
+>>>>>>> master
 		ObjectInputStream ois = null;
 		File file = new File("resourses/serialization/serialization.dat");
 		if (!file.exists()) {
@@ -85,8 +92,13 @@ public class Game {
 	
 	/**
 	 * Save the game state.
+	 * @throws IOException 
 	 */
+<<<<<<< HEAD
 	public void saveGame() throws IOException{
+=======
+	public void saveGame() throws IOException {
+>>>>>>> master
 		File file = new File("resourses/serialization/serialization.dat");
 		if (file.exists()) {
 			file.delete();
@@ -94,6 +106,7 @@ public class Game {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
 		oos.writeObject(maze);
 		oos.close();
+<<<<<<< HEAD
 	}
 	
 	
@@ -137,5 +150,7 @@ public class Game {
 			}
     	}
     	return stack;
+=======
+>>>>>>> master
 	}
 }

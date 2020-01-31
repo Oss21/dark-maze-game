@@ -1,9 +1,18 @@
 package dataStructure;
 
+<<<<<<< HEAD
 import model.Path;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+=======
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import model.Path;
+import model.Path.PathType;
+>>>>>>> master
 
 class EdgeTest {
 

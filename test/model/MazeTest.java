@@ -28,7 +28,11 @@ class MazeTest {
 		assertTrue(CompareFileWithArray.assertEqualsCompareFileWithArrangement(maze.getMatriz(), "resourses/data/laberinto_1.csv"));
 	}
 	
+<<<<<<< HEAD
 	**/
+=======
+	*/
+>>>>>>> master
 	
 	
 	

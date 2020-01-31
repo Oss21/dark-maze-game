@@ -77,8 +77,13 @@ public class StartWindowsController {
 			MazeGameController ven = loader.getController();
 			ven.setGame(game);
 			ven.setIsLoaded(true);
+<<<<<<< HEAD
 			ven.disableCreateButtons(true);
 			ven.paintMaze();
+=======
+			ven.disableButtons();
+			ven.createMaze();
+>>>>>>> master
 			ven.detectKeys(scene);
 			
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
