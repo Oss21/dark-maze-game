@@ -33,7 +33,7 @@ public class Main extends Application {
 	
 	/**
 	 * Launch the game
-	 * @param args
+	 * @param args - arguments of app for init
 	 */
 	public static void main(String[] args) {
 		launch(args);
